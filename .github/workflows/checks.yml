@@ -1,0 +1,46 @@
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Project checks and submission export
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          # Full history is required for git subtree split.
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install locked project dependencies
+        working-directory: project
+        run: uv sync --frozen
+
+      - name: Run project quality checks
+        working-directory: project
+        run: make check
+
+      - name: Build submission subtree
+        run: ./scripts/build_submission.sh
+
+      - name: Verify submission subtree
+        run: ./scripts/verify_submission.sh
+
+      - name: Re-check exported project in a clean directory
+        run: |
+          export_dir="$(mktemp -d)"
+          git archive submission | tar -x -C "${export_dir}"
+          cd "${export_dir}"
+          uv sync --frozen
+          make check
