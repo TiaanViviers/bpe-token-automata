@@ -12,6 +12,7 @@ Only content under `project/` is eligible for export through the repository’s 
 |---|---|
 | Repository contract | [`../AGENTS.md`](../AGENTS.md) |
 | CS345 project specification | [`specs/cs345-project-specification.md`](specs/cs345-project-specification.md) |
+| Research catalogue | [`../research/index.yaml`](../research/index.yaml) · [`../research/README.md`](../research/README.md) |
 | Rules | [`rules/`](rules/) |
 | Feature workflow | [`workflows/feature-development.md`](workflows/feature-development.md) |
 | Templates | [`templates/ticket.md`](templates/ticket.md), [`templates/handoff.md`](templates/handoff.md) |

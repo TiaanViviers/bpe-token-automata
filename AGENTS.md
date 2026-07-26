@@ -10,7 +10,7 @@ This file is the entry point for humans and coding agents. Detailed policies liv
 |---|---|
 | This contract | `AGENTS.md` (this file) |
 | Agent workspace map | [`agent/README.md`](agent/README.md) |
-| CS345 project specification (Markdown, default) | [`agent/specs/cs345-project-specification.md`](agent/specs/cs345-project-specification.md) → [`research/markdown/cs345-project-specification.md`](research/markdown/cs345-project-specification.md) |
+| CS345 project specification (Markdown, default) | [`agent/specs/cs345-project-specification.md`](agent/specs/cs345-project-specification.md) → [`research/markdown/cs345-project-specification/index.md`](research/markdown/cs345-project-specification/index.md) |
 | CS345 project specification (PDF, verify only) | `research/sources/cs345-project-specification.pdf` |
 | Git rules | [`agent/rules/git-and-branches.md`](agent/rules/git-and-branches.md) |
 | Research / citation rules | [`agent/rules/research-sources.md`](agent/rules/research-sources.md) |

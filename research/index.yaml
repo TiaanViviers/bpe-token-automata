@@ -1,0 +1,246 @@
+# Research library catalogue for bpe-token-automata.
+# Paths are relative to this research/ directory.
+# Authority and reading workflow: ../AGENTS.md and ../agent/rules/research-sources.md
+#
+# conversion.status vocabulary:
+#   unconverted | converted-unverified | partially-verified | verified-for-use | conversion-defective
+#
+# role vocabulary (project-local):
+#   specification | core | background | extension | supplementary
+
+schema_version: 1
+updated: 2026-07-26
+
+papers:
+  - id: cs345-project-specification-2026
+    title: "CS345/CS711 Project Specification: BPE DFA Tokenization"
+    authors:
+      - Stellenbosch University Computer Science
+    year: 2026
+    citation_key: stellenbosch2026cs345spec
+    role: specification
+    kind: specification
+    venue: Stellenbosch University (course specification)
+
+    pdf: sources/cs345-project-specification.pdf
+    markdown: markdown/cs345-project-specification/index.md
+    notes: notes/cs345-project-specification.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Table soft-hyphen control characters were normalised to ASCII hyphens during catalogue cleanup."
+
+    relevant_topics:
+      - compulsory tasks
+      - marking criteria
+      - testing requirements
+      - extensions
+
+  - id: formalizing-bpe-tokenization-2023
+    title: Formalizing BPE Tokenization
+    authors:
+      - Martin Berglund
+      - Brink van der Merwe
+    year: 2023
+    citation_key: berglund2023formalizing
+    role: core
+    kind: paper
+    venue: Electronic Proceedings in Theoretical Computer Science 388:16–27
+
+    pdf: sources/formalizing-bpe-tokenization.pdf
+    markdown: markdown/formalizing-bpe-tokenization/index.md
+    notes: notes/formalizing-bpe-tokenization.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Marker inserts spurious <sup>a</sup> in places; verify fidelity-sensitive passages against the PDF."
+
+    relevant_topics:
+      - BPE semantics
+      - proper dictionaries
+      - SentencePiece vs Hugging Face semantics
+      - canonical tokenization
+      - finite lookahead
+
+  - id: constructing-bpe-token-dfa-2026
+    title: Constructing a BPE Tokenization DFA
+    authors:
+      - Martin Berglund
+      - Willeke Martens
+      - Brink van der Merwe
+    year: 2026
+    citation_key: berglund2026constructing
+    role: core
+    kind: paper
+    venue: Theoretical Computer Science 1083:116131
+
+    pdf: sources/constructing-bpe-token-dfa.pdf
+    markdown: markdown/constructing-bpe-token-dfa/index.md
+    notes: notes/constructing-bpe-token-dfa.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Many cross-references resolve to empty anchors (](#))."
+        - "Spurious <sup>a</sup> insertions remain in prose."
+        - "Theorem 13 / Corollary 14 math glyphs were restored from the PDF during catalogue cleanup; re-check before relying on that passage alone."
+
+    relevant_topics:
+      - token DFA
+      - successive merge construction
+      - context invariance
+      - locality and state complexity
+      - string-to-tokenization transducers
+
+  - id: constructing-compact-bpe-token-dfas-2025
+    title: Constructing Compact BPE Token DFAs
+    authors:
+      - Martin Berglund
+      - Anna Jonsson
+      - Willeke Martens
+      - Brink van der Merwe
+    year: 2025
+    citation_key: berglund2025compact
+    role: core
+    kind: paper
+    venue: Implementation and Application of Automata (CIAA), Springer, pages 27–40
+
+    pdf: sources/constructing-compact-bpe-token-dfas.pdf
+    markdown: markdown/constructing-compact-bpe-token-dfas/index.md
+    notes: notes/constructing-compact-bpe-token-dfas.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues: []
+
+    relevant_topics:
+      - delayed-input automata
+      - default transitions
+      - compact token DFA
+      - state-avoidance optimisations
+      - clean-copy reuse
+
+  - id: determinization-of-transducers-2002
+    title: Determinization of transducers over finite and infinite words
+    authors:
+      - Marie-Pierre Béal
+      - Olivier Carton
+    year: 2002
+    citation_key: beal2002determinization
+    role: background
+    kind: paper
+    venue: Theoretical Computer Science 289(1):225–251
+
+    pdf: sources/determinization-of-transducers.pdf
+    markdown: markdown/determinization-of-transducers/index.md
+    notes: notes/determinization-of-transducers.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Original Marker output had severe fi/ff ligature OCR failures; many were mechanically repaired (e.g. #nite→finite, Cho2rut→Choffrut, i2→iff)."
+        - "Residual Marker artefacts may remain; verify algorithms and twinning-property statements against the PDF."
+
+    relevant_topics:
+      - subsequential transducers
+      - transducer determinization
+      - twinning property
+      - bounded variation
+
+  - id: streaming-bpe-tokenization-2026
+    title: An Efficient Algorithm for Streaming BPE Tokenization
+    authors:
+      - Konstantinos Mamouras
+      - Angela W. Li
+      - Yudi Yang
+    year: 2026
+    citation_key: mamouras2026streaming
+    role: extension
+    kind: paper
+    venue: Proceedings of the ACM on Programming Languages 10(PLDI):article 252
+
+    pdf: sources/streaming-bpe-tokenization.pdf
+    markdown: markdown/streaming-bpe-tokenization/index.md
+    notes: notes/streaming-bpe-tokenization.md
+
+    conversion:
+      tool: marker
+      status: conversion-defective
+      converted_at: 2026-07-26
+      known_issues:
+        - "638 U+FFFD replacement characters across 37 lines; mathematical symbols were lost in conversion."
+        - "Do not implement from Markdown alone; consult the PDF for definitions, delay analysis, and algorithms."
+        - "Bibliography links were partially repaired; some Marker citation/URL artefacts remain."
+
+    relevant_topics:
+      - streaming BPE
+      - transducer delay
+      - bounded lookahead
+      - linear-time tokenization
+
+  - id: incremental-bpe-tokenization-2026
+    title: Incremental BPE Tokenization
+    authors:
+      - Shenghu Jiang
+      - Ruihao Gong
+    year: 2026
+    citation_key: jiang2026incremental
+    role: extension
+    kind: paper
+    venue: Proceedings of the 43rd International Conference on Machine Learning (PMLR 306); arXiv:2605.30813
+    author_note: "Course bibliography [11] lists different given names (Shunyu Jiang / Ruiqi Gong). Authors above follow this PDF/Markdown front matter until verified against a publisher page."
+
+    pdf: sources/incremental-bpe-tokenization.pdf
+    markdown: markdown/incremental-bpe-tokenization/index.md
+    notes: notes/incremental-bpe-tokenization.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Spurious <sup>a</sup> insertions remain in places."
+
+    relevant_topics:
+      - incremental BPE
+      - prefix tokenizations
+      - eager output
+      - streaming latency
+
+  - id: subword-tokenization-meets-formal-language-theory-2025
+    title: Subword Tokenization Meets Formal Language Theory
+    authors:
+      - Marco Cognetta
+    year: 2025
+    citation_key: cognetta2025subword
+    role: supplementary
+    kind: slides
+    venue: Institute of Science Tokyo (slide deck / talk materials)
+
+    pdf: sources/subword-tokenization-meets-formal-language-theory.pdf
+    markdown: markdown/subword-tokenization-meets-formal-language-theory/index.md
+    notes: notes/subword-tokenization-meets-formal-language-theory.md
+
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues:
+        - "Slide deck conversion; reading order and figure context can be lossy."
+
+    relevant_topics:
+      - subword tokenization survey
+      - formal-language perspective
+      - tokenizer brittleness

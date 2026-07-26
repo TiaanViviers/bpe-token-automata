@@ -55,18 +55,23 @@ Current structure:
 
 ```text
 research/
+├── README.md
+├── index.yaml
 ├── sources/
 ├── markdown/
-├── notes/
-└── README.md
+└── notes/
 ```
+
+The machine-readable catalogue is [`../../research/index.yaml`](../../research/index.yaml).  
+Human-oriented map and verification workflow: [`../../research/README.md`](../../research/README.md).  
+Lightweight path/status checks: `python3 scripts/verify_research_index.py` from the repository root.
 
 ### Project specification
 
 The official CS345/CS711 project specification uses the same dual-format pattern:
 
 - pointer: [`../specs/cs345-project-specification.md`](../specs/cs345-project-specification.md)
-- Markdown (default): `research/markdown/cs345-project-specification.md`
+- Markdown (default): `research/markdown/cs345-project-specification/index.md`
 - PDF (verify only): `research/sources/cs345-project-specification.pdf`
 
 Do not open the PDF for routine reading.
@@ -102,11 +107,9 @@ A note must clearly distinguish:
 
 ## Research index
 
-A formal research index may be designed after Marker conversion is stable.
+Locate papers through [`../../research/index.yaml`](../../research/index.yaml) first, then the linked Markdown, notes, and PDF paths.
 
-Until then, locate papers through `research/README.md`, directory layout, and human-maintained notes.
-
-When an index is introduced, each paper should have a stable identifier and metadata similar to:
+Each catalogue entry has a stable `id`, citation key, role, conversion block, and paths similar to:
 
 ```yaml
 papers:
@@ -119,15 +122,19 @@ papers:
     year: 2026
     role: core
     citation_key: berglund2026constructing
-    pdf: sources/constructing-bpe-token-dfa-2026.pdf
-    markdown: markdown/constructing-bpe-token-dfa-2026/
-    notes: notes/constructing-bpe-token-dfa-2026.md
-    conversion_status: converted-unverified
+    pdf: sources/constructing-bpe-token-dfa.pdf
+    markdown: markdown/constructing-bpe-token-dfa/index.md
+    notes: notes/constructing-bpe-token-dfa.md
+    conversion:
+      tool: marker
+      status: converted-unverified
+      converted_at: 2026-07-26
+      known_issues: []
 ```
 
 Do not invent missing metadata. Mark it as unknown until verified.
 
-Do not create the index file until the conversion workflow is approved.
+When conversion fidelity work changes, update both the notes file and `conversion.status` / `conversion.known_issues` in the catalogue, then run `python3 scripts/verify_research_index.py`.
 
 ## Conversion status
 

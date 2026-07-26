@@ -200,9 +200,9 @@ The repository shall contain automated tests and a command that runs them. The r
 
 |              | Measurement |          | Required   | reporting      |            |            |             |             |             |                   |             |
 |--------------|-------------|----------|------------|----------------|------------|------------|-------------|-------------|-------------|-------------------|-------------|
-| Construction | time        |          | Wall-clock | time for       | each       | dictionary |             | prefix;     | report      | warm-up           | and repe   |
+| Construction | time        |          | Wall-clock | time for       | each       | dictionary |             | prefix;     | report      | warm-up           | and repe-   |
 |              |             | tition   | policy.    |                |            |            |             |             |             |                   |             |
-| Peak         | memory      |          | Maximum    | resident       |            | memory or  | a           | documented  |             | language-specific | equiv      |
+| Peak         | memory      |          | Maximum    | resident       |            | memory or  | a           | documented  |             | language-specific | equiv-      |
 | State        | count       |          | Reachable  | states,        | with       | sink       | states      | identified  | separately. |                   |             |
 | Transition   | count       | Explicit |            | transitions;   |            | default    | transitions | shall       | be          | reported          | separately. |
 | Tokenization | throughput  | Input    | bytes      | or             | characters | per        | second,     | with        | the unit    | stated.           |             |

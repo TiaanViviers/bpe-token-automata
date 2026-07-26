@@ -4,7 +4,7 @@ Pointer only. Do not duplicate the specification body here.
 
 ## Agent reading copy (default)
 
-[`research/markdown/cs345-project-specification.md`](../../research/markdown/cs345-project-specification.md)
+[`research/markdown/cs345-project-specification/index.md`](../../research/markdown/cs345-project-specification/index.md)
 
 Use this for ordinary reading, search, and implementation planning.
 
@@ -19,7 +19,8 @@ Local PDF (gitignored). Open it only to verify fidelity-sensitive wording: exact
 - Prefer the Markdown conversion by default.
 - Do not ingest the PDF on every task; it is expensive and usually unnecessary.
 - Formal citations and submission-facing claims must treat the university PDF as the source of authority, not the conversion file.
-- Conversion status: `converted-unverified` until humans mark verified sections in notes.
+- Conversion status: see `research/index.yaml` entry `cs345-project-specification-2026` (`converted-unverified` until humans mark verified sections in notes).
+- Research catalogue: [`../../research/index.yaml`](../../research/index.yaml)
 
 ## Related
 
