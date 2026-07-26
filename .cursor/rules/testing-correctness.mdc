@@ -1,0 +1,20 @@
+---
+description: Automated tests, correctness evidence, test fixtures, fuzzing, exhaustive enumeration, differential testing, or automata equivalence
+globs:
+  - "project/tests/**"
+  - "project/src/**"
+  - "project/src/**/verification/**"
+alwaysApply: false
+---
+
+Read and follow:
+
+@agent/rules/testing-and-correctness.md
+
+Important principles:
+
+- tests must provide independent correctness evidence;
+- do not derive implementation, oracle, and expected output from the same logic;
+- preserve generated failures as deterministic regression cases;
+- do not weaken tests merely to obtain a passing suite;
+- report bounds, seeds, timeouts, and limitations honestly.

@@ -1,0 +1,30 @@
+---
+description: Research-paper reading, Markdown conversions, citations, formal definitions, equations, algorithms, or literature-derived implementation decisions
+globs:
+  - "research/**"
+  - "project/docs/**/*.md"
+  - "project/report/**"
+  - "agent/specs/**"
+  - "agent/reviews/**"
+alwaysApply: false
+---
+
+Read and follow:
+
+@agent/rules/research-sources.md
+@research/README.md
+@agent/specs/cs345-project-specification.md
+
+Use converted Markdown for search and initial reading.
+
+Verify fidelity-sensitive material against the original PDF, including:
+
+- mathematical notation;
+- equations;
+- algorithms;
+- pseudocode;
+- figures and diagrams;
+- tables;
+- ambiguous conversion output.
+
+Formal documentation must cite the original publication.

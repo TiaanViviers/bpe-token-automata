@@ -1,0 +1,19 @@
+---
+description: Core repository context and navigation requirements
+alwaysApply: true
+---
+
+Read and follow @AGENTS.md before performing repository work.
+
+Key boundaries:
+
+- `project/` is the only GitLab-exportable subtree.
+- `agent/`, `research/`, `.cursor/`, `.github/`, and root-level
+  monorepo `scripts/` are private GitHub-side development resources.
+- Official CS345 project specification pointer:
+  @agent/specs/cs345-project-specification.md
+  (Markdown default; PDF verify-only).
+- Do not commit, push, merge, rebase, modify remotes, or publish without
+  explicit human approval.
+- Use the detailed rules referenced by `AGENTS.md` when relevant.
+- Do not duplicate authoritative policy into new files.

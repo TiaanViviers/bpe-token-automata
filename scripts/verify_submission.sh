@@ -68,10 +68,18 @@ done
 echo
 
 # Paths that must never appear in the GitLab export.
+# Defence in depth: git subtree split --prefix=project should already exclude these.
+#
+# Notes on scripts/:
+# - Repository-root monorepo scripts (build_submission.sh / verify_submission.sh)
+#   must never appear in the export.
+# - A future submission-safe project/scripts/ directory may legitimately export
+#   as root scripts/. Do not reject every scripts/ path blindly.
 FORBIDDEN_PATHS=(
+  "AGENTS.md"
   "agent"
-  "team"
   "research"
+  ".cursor"
   ".github"
   "scripts/build_submission.sh"
   "scripts/verify_submission.sh"

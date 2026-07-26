@@ -1,0 +1,30 @@
+---
+description: Medium or large feature implementation, formal algorithm work, multi-file changes, tickets, handoffs, plans, or work based on an approved ticket
+globs:
+  - "agent/tickets/**"
+  - "agent/handoffs/**"
+  - "agent/plans/**"
+  - "agent/specs/**"
+  - "project/src/**"
+  - "project/tests/**"
+alwaysApply: false
+---
+
+Follow:
+
+@agent/workflows/feature-development.md
+@agent/templates/ticket.md
+@agent/templates/handoff.md
+
+Before implementation:
+
+1. inspect Git state;
+2. locate the approved ticket;
+3. read relevant formal sources and project decisions;
+4. produce a bounded implementation plan;
+5. identify blocking ambiguity;
+6. obtain human approval for substantial work.
+
+Implement only the approved scope.
+
+Do not commit or push unless explicitly authorised.

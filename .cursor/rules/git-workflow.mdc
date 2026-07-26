@@ -1,0 +1,22 @@
+---
+description: Use for Git branches, commits, pull requests, merges, repository history, submission exports, or GitLab publication
+globs:
+  - "**/.github/**"
+  - "scripts/build_submission.sh"
+  - "scripts/verify_submission.sh"
+  - "agent/rules/git-and-branches.md"
+  - "agent/workflows/feature-development.md"
+alwaysApply: false
+---
+
+Before any Git-related task, read and follow:
+
+@agent/rules/git-and-branches.md
+
+Also consult these when relevant:
+
+@agent/workflows/feature-development.md
+@agent/templates/handoff.md
+
+Do not perform a Git write operation unless the human has explicitly
+authorised it.
