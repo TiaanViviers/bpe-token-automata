@@ -18,7 +18,7 @@ Only content under `project/` is eligible for export through the repository’s 
 | Example filled docs | [`tickets/TICKET-000-example-infrastructure.md`](tickets/TICKET-000-example-infrastructure.md) |
 | Working tickets / handoffs | [`tickets/`](tickets/), [`handoffs/`](handoffs/) |
 | Long-lived specs | [`specs/`](specs/) |
-| Skills (future) | [`skills/<name>/SKILL.md`](skills/) |
+| Agent skills | [`../.agents/skills/<name>/SKILL.md`](../.agents/skills/) |
 
 Read this full map when placing a new document. For ordinary tasks, start from the cheat sheet and the linked rule or workflow.
 
@@ -34,8 +34,10 @@ It supports:
 * research-sensitive design work;
 * task handoffs between humans and agents;
 * reviews and quality checks;
-* reusable prompts and skills;
+* reusable prompts;
 * long-lived engineering specifications.
+
+Reusable Agent Skills live outside this directory at [`.agents/skills/`](../.agents/skills/).
 
 Material here may be incomplete, exploratory, or internal. It must not be treated as automatically authoritative.
 
@@ -61,9 +63,11 @@ agent/
 ├── handoffs/
 ├── plans/
 ├── reviews/
-├── prompts/
-└── skills/
+└── prompts/
 ```
+
+Agent Skills are not stored under `agent/`. They live at repository-root
+[`.agents/skills/`](../.agents/skills/).
 
 Some directories may remain empty until the corresponding workflow is introduced.
 
@@ -288,34 +292,35 @@ Prompts should state:
 * expected output;
 * prohibited actions.
 
-Reusable procedural prompts should eventually be promoted into `skills/` or `workflows/`.
+Reusable procedural prompts should eventually be promoted into
+[`.agents/skills/`](../.agents/skills/) or [`workflows/`](workflows/).
 
-## `skills/`
+## Skills
 
-Contains reusable agent skills for recurring procedures.
-
-Canonical layout:
+Reusable agent skills for recurring procedures live at:
 
 ```text
-agent/skills/<skill-name>/SKILL.md
+.agents/skills/<skill-name>/SKILL.md
 ```
 
-Example path once a skill is approved:
+Example:
 
 ```text
-agent/skills/grill-me/SKILL.md
+.agents/skills/grill-me/SKILL.md
 ```
 
 Clarifications:
 
-* `agent/skills/` is the canonical source for project skills;
+* `.agents/skills/` is the canonical location for project Agent Skills;
+* `.agents/` is private collaborative material and must not enter the GitLab
+  export (see root [`AGENTS.md`](../AGENTS.md) and
+  [`rules/git-and-branches.md`](rules/git-and-branches.md));
+* root `skills-lock.json` pins installed skill content hashes and is likewise
+  private;
 * skills are reusable procedures, not stores of project facts;
-* tool-specific discovery adapters or symlinks may be added later;
-* no skill should be created until its format and trigger are approved.
-
-Skills should not duplicate authoritative rules or specifications.
-
-They should point to those sources when necessary.
+* skills should not duplicate authoritative rules or specifications — they
+  should point to those sources when necessary;
+* this `agent/` directory no longer contains a `skills/` subtree.
 
 ## Document lifecycle
 
@@ -360,7 +365,7 @@ Ask:
 * Is this temporary planning?
 * Is this a record of completed work?
 * Is this a review?
-* Is this a reusable skill?
+* Is this a reusable skill (then place it under `.agents/skills/`, not here)?
 
 Do not create multiple documents containing the same authority.
 
@@ -441,10 +446,9 @@ The private agent workspace currently provides:
 * testing and correctness rules;
 * a feature-development workflow;
 * ticket and handoff templates plus an example ticket/handoff pair;
-* Cursor rule adapters under `.cursor/rules/`.
+* Cursor rule adapters under `.cursor/rules/`;
+* tailored Agent Skills under `.agents/skills/`.
 
 Research indexing and paper-conversion documentation will be completed after the initial Marker conversion process is stable.
-
-Skills will be added incrementally after the base navigation and rule system has been tested, and only after each skill’s format and trigger are approved.
 
 A root human-facing README remains a non-blocking future decision while the repository is private.

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Write a durable handoff under agent/handoffs/"
+policy:
+  allow_implicit_invocation: false

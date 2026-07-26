@@ -18,6 +18,7 @@ This file is the entry point for humans and coding agents. Detailed policies liv
 | Feature workflow | [`agent/workflows/feature-development.md`](agent/workflows/feature-development.md) |
 | Ticket / handoff templates | [`agent/templates/`](agent/templates/) |
 | Example ticket / handoff | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |
+| Agent skills | [`.agents/skills/`](.agents/skills/) |
 | Submission-safe code | `project/` |
 
 ## Project overview
@@ -37,6 +38,7 @@ bpe-token-automata/
 ├── AGENTS.md          # this contract
 ├── project/           # only GitLab-exportable subtree
 ├── agent/             # private agent workspace
+├── .agents/           # private Agent Skills (Codex/Cursor discovery)
 ├── research/          # papers, conversions, notes
 ├── scripts/           # monorepo export tooling
 ├── .cursor/           # Cursor rule adapters
@@ -46,7 +48,8 @@ bpe-token-automata/
 | Path | Role |
 |---|---|
 | `project/` | Submission-safe installable project root after export |
-| `agent/` | Rules, workflows, tickets, handoffs, specs, skills |
+| `agent/` | Rules, workflows, tickets, handoffs, specs, plans, reviews, prompts |
+| `.agents/` | Private reusable Agent Skills (`SKILL.md`); not for GitLab |
 | `research/` | Research sources and derived material |
 | `scripts/` | Monorepo submission build/verify tooling |
 | `.cursor/` | Thin Cursor adapters into `AGENTS.md` and `agent/` |
@@ -67,6 +70,8 @@ Private material must never appear in the export, including:
 ```text
 AGENTS.md
 agent/
+.agents/
+skills-lock.json  # Agent Skills installer lockfile
 research/
 .cursor/
 .github/
@@ -173,9 +178,10 @@ Never fabricate paper claims, benchmark results, citations, test outcomes, exper
 ## Documentation boundary
 
 * `agent/` — private process material (tickets, plans, handoffs, rules, reviews).
+* `.agents/` — private Agent Skills procedures (and related installer metadata such as root `skills-lock.json`).
 * `project/docs/` — submission-safe technical documentation.
 
-Do not copy private agent material into `project/`. Promote only human-reviewed, formally consistent documentation.
+Do not copy private agent or skills material into `project/`. Promote only human-reviewed, formally consistent documentation.
 
 ## Definition of done
 
@@ -205,15 +211,16 @@ Templates: [`agent/templates/ticket.md`](agent/templates/ticket.md), [`agent/tem
 | Ticket template | [`agent/templates/ticket.md`](agent/templates/ticket.md) |
 | Handoff template | [`agent/templates/handoff.md`](agent/templates/handoff.md) |
 | Example ticket | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |
+| Agent skills | [`.agents/skills/`](.agents/skills/) |
 
-Additional workflows, specifications, and skills may be added later under `agent/`. Do not assume nonexistent files are present.
+Additional workflows and specifications may be added under `agent/`. Additional skills may be added under `.agents/skills/`. Do not assume nonexistent files are present.
 
 ## Prohibited actions
 
 Do not:
 
 * expose credentials, tokens, private keys, or `.env` contents;
-* place private agent or research material under `project/`;
+* place private agent, skills, or research material under `project/`;
 * push to GitLab without explicit approval;
 * implement formal algorithms from memory or unverified summaries alone;
 * silently resolve contradictions between sources;

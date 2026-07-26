@@ -233,6 +233,8 @@ These root-level paths must remain outside the GitLab export:
 ```text
 AGENTS.md
 agent/
+.agents/
+skills-lock.json
 research/
 .cursor/
 .github/

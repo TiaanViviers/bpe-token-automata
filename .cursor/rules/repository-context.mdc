@@ -8,8 +8,10 @@ Read and follow @AGENTS.md before performing repository work.
 Key boundaries:
 
 - `project/` is the only GitLab-exportable subtree.
-- `agent/`, `research/`, `.cursor/`, `.github/`, and root-level
-  monorepo `scripts/` are private GitHub-side development resources.
+- `agent/`, `.agents/`, `skills-lock.json`, `research/`, `.cursor/`,
+  `.github/`, and root-level monorepo `scripts/` are private GitHub-side
+  development resources.
+- Reusable Agent Skills live under `.agents/skills/`.
 - Official CS345 project specification pointer:
   @agent/specs/cs345-project-specification.md
   (Markdown default; PDF verify-only).

@@ -78,6 +78,8 @@ echo
 FORBIDDEN_PATHS=(
   "AGENTS.md"
   "agent"
+  ".agents"
+  "skills-lock.json"
   "research"
   ".cursor"
   ".github"
