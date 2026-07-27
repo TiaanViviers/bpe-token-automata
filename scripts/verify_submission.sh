@@ -39,6 +39,7 @@ path_present() {
 REQUIRED_PATHS=(
   "README.md"
   "pyproject.toml"
+  "uv.lock"
   "Makefile"
   "src"
   "tests"
