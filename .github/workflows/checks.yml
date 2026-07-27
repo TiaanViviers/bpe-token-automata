@@ -1,27 +1,90 @@
+# Phase 1 GitHub CI quality gates.
+#
+# Required status-check job IDs (stable names for the main ruleset):
+#   branch-name, quality, submission-export
+#
+# Pull-request checkout behaviour:
+#   actions/checkout uses the merge commit GitHub builds for the PR into main
+#   (github.sha). Push and workflow_dispatch use the checked-out commit as-is.
+#   The submission-export job always exports that same commit — never an
+#   unrelated main tip.
+#
+# Dirty-tree strategy:
+#   The submission subtree is built before any project dependency install in
+#   that job, so the working tree stays clean for git subtree split. Quality
+#   and export jobs are independent runners.
+
 name: Checks
 
 on:
   pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  validate:
-    name: Project checks and submission export
+  branch-name:
+    name: branch-name
     runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch name
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          HEAD_REF: ${{ github.head_ref }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
 
+          PATTERN='^(feature|fix|test|docs|experiment|research|ci|chore)/[a-z0-9]+(-[a-z0-9]+)*$'
+          CONVENTION='^(feature|fix|test|docs|experiment|research|ci|chore)/[a-z0-9]+(-[a-z0-9]+)*$'
+
+          if [[ "${EVENT_NAME}" != "pull_request" ]]; then
+            echo "Event '${EVENT_NAME}' on '${REF_NAME}': skipping feature-branch name check."
+            exit 0
+          fi
+
+          BRANCH="${HEAD_REF}"
+          echo "Checking pull-request source branch: '${BRANCH}'"
+
+          if [[ -z "${BRANCH}" ]]; then
+            echo "Error: empty pull-request head branch name." >&2
+            exit 1
+          fi
+
+          if [[ "${BRANCH}" =~ ${PATTERN} ]]; then
+            echo "Branch name is valid."
+            exit 0
+          fi
+
+          echo "Error: invalid branch name '${BRANCH}'." >&2
+          echo "Required convention:" >&2
+          echo "  ${CONVENTION}" >&2
+          echo "Examples: feature/dictionary-parser, ci/github-quality-gates, fix/self-merge-transitions" >&2
+          exit 1
+
+  quality:
+    name: quality
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          # Full history is required for git subtree split.
-          fetch-depth: 0
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
         with:
           enable-cache: true
+          cache-dependency-glob: project/uv.lock
+          python-version: "3.12"
 
       - name: Install locked project dependencies
         working-directory: project
@@ -31,16 +94,72 @@ jobs:
         working-directory: project
         run: make check
 
-      - name: Build submission subtree
-        run: ./scripts/build_submission.sh
+  submission-export:
+    name: submission-export
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository (full history)
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # Full history is required for git subtree split.
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+        with:
+          enable-cache: true
+          cache-dependency-glob: project/uv.lock
+          python-version: "3.12"
+
+      - name: Configure temporary Git identity for subtree split
+        run: |
+          set -euo pipefail
+          # Local (repository) config only — not global user settings.
+          git config user.name "CS345 Submission Export"
+          git config user.email "submission-export@users.noreply.github.com"
+
+      - name: Build submission subtree from checked-out commit
+        run: |
+          set -euo pipefail
+          echo "Exporting project/ from commit: $(git rev-parse HEAD)"
+          # Build before any dependency install that could dirty the tree.
+          ./scripts/build_submission.sh
 
       - name: Verify submission subtree
         run: ./scripts/verify_submission.sh
 
       - name: Re-check exported project in a clean directory
         run: |
+          set -euo pipefail
           export_dir="$(mktemp -d)"
+          echo "Extracting submission branch into ${export_dir}"
           git archive submission | tar -x -C "${export_dir}"
-          cd "${export_dir}"
-          uv sync --frozen
-          make check
+
+          echo "Confirming standalone export root layout:"
+          for path in README.md pyproject.toml uv.lock Makefile src tests; do
+            if [[ ! -e "${export_dir}/${path}" ]]; then
+              echo "Error: missing expected export path: ${path}" >&2
+              exit 1
+            fi
+            echo "  OK  ${path}"
+          done
+
+          (
+            cd "${export_dir}"
+            uv sync --frozen
+            make check
+          )
+
+          # Archive the validated submission tree only (not the temp .venv).
+          archive_path="${GITHUB_WORKSPACE}/bpe-token-automata-submission.tar.gz"
+          git archive --format=tar.gz --output="${archive_path}" submission
+          echo "Wrote validated archive: ${archive_path}"
+          ls -lh "${archive_path}"
+
+      - name: Upload validated submission artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: validated-submission
+          path: bpe-token-automata-submission.tar.gz
+          retention-days: 7
+          if-no-files-found: error

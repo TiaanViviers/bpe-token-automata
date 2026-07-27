@@ -12,6 +12,7 @@ This file is the entry point for humans and coding agents. Detailed policies liv
 | Agent workspace map | [`agent/README.md`](agent/README.md) |
 | CS345 project specification (Markdown, default) | [`agent/specs/cs345-project-specification.md`](agent/specs/cs345-project-specification.md) → [`research/markdown/cs345-project-specification/index.md`](research/markdown/cs345-project-specification/index.md) |
 | CS345 project specification (PDF, verify only) | `research/sources/cs345-project-specification.pdf` |
+| CI / quality gates | [`agent/specs/ci-and-quality-gates.md`](agent/specs/ci-and-quality-gates.md) |
 | Git rules | [`agent/rules/git-and-branches.md`](agent/rules/git-and-branches.md) |
 | Research / citation rules | [`agent/rules/research-sources.md`](agent/rules/research-sources.md) |
 | Testing / correctness rules | [`agent/rules/testing-and-correctness.md`](agent/rules/testing-and-correctness.md) |
@@ -204,6 +205,7 @@ Templates: [`agent/templates/ticket.md`](agent/templates/ticket.md), [`agent/tem
 |---|---|
 | Agent workspace map | [`agent/README.md`](agent/README.md) |
 | CS345 project specification | [`agent/specs/cs345-project-specification.md`](agent/specs/cs345-project-specification.md) |
+| CI / quality gates | [`agent/specs/ci-and-quality-gates.md`](agent/specs/ci-and-quality-gates.md) |
 | Git rules | [`agent/rules/git-and-branches.md`](agent/rules/git-and-branches.md) |
 | Research rules | [`agent/rules/research-sources.md`](agent/rules/research-sources.md) |
 | Testing rules | [`agent/rules/testing-and-correctness.md`](agent/rules/testing-and-correctness.md) |

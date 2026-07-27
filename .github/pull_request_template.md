@@ -6,6 +6,8 @@
 - [ ] Research note / formal source (or N/A):
 - [ ] Relevant tests were added or updated
 - [ ] Validation run (`make check` in `project/`, plus any ticket-specific commands)
+- [ ] Branch name matches `feature|fix|test|docs|experiment|research|ci|chore` / kebab-case
+- [ ] Expected CI jobs: `branch-name`, `quality`, `submission-export`
 - [ ] Documentation updated where required (or N/A)
 - [ ] No private, secret, or collaborative-only material entered `project/`
 - [ ] AI-generated material was human-reviewed and not accepted blindly

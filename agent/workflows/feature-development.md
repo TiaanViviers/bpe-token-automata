@@ -198,7 +198,7 @@ The pull request should link to:
 - handoff;
 - tests and results.
 
-CI must pass before merge.
+CI must pass before merge (`branch-name`, `quality`, `submission-export`; see [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md)).
 
 ## 11. Merge and close
 

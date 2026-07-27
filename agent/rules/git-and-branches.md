@@ -52,8 +52,15 @@ fix/<short-description>
 test/<short-description>
 docs/<short-description>
 experiment/<short-description>
-chore/<short-description>
 research/<short-description>
+ci/<short-description>
+chore/<short-description>
+```
+
+The source branch of a pull request into `main` must match:
+
+```text
+^(feature|fix|test|docs|experiment|research|ci|chore)/[a-z0-9]+(-[a-z0-9]+)*$
 ```
 
 Examples:
@@ -65,6 +72,8 @@ test/exhaustive-small-dictionaries
 docs/unicode-symbol-policy
 experiment/baseline-prefix-scaling
 research/transducer-determinisation
+ci/github-quality-gates
+chore/update-dependencies
 ```
 
 Use lowercase words separated by hyphens.
@@ -188,7 +197,15 @@ cd project
 make check
 ```
 
-The submission export validation workflow must also pass.
+GitHub Actions must also pass the three Phase 1 jobs:
+
+```text
+branch-name
+quality
+submission-export
+```
+
+Details: [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md).
 
 The reviewing partner should understand the change well enough to explain it independently.
 
@@ -198,12 +215,12 @@ When repository settings permit, configure `main` so that:
 
 - direct pushes are blocked;
 - pull requests are required;
-- required CI checks must pass;
+- required CI checks must pass (`branch-name`, `quality`, `submission-export`);
 - at least one approval is required;
 - stale approvals are dismissed after material changes;
 - force-pushes and deletion are disabled.
 
-Do not change branch-protection settings without both partners agreeing.
+Do not change branch-protection / ruleset settings without both partners agreeing.
 
 ## Submission branch
 

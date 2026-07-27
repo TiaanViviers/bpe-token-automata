@@ -12,6 +12,7 @@ Only content under `project/` is eligible for export through the repository’s 
 |---|---|
 | Repository contract | [`../AGENTS.md`](../AGENTS.md) |
 | CS345 project specification | [`specs/cs345-project-specification.md`](specs/cs345-project-specification.md) |
+| CI / quality gates | [`specs/ci-and-quality-gates.md`](specs/ci-and-quality-gates.md) |
 | Research catalogue | [`../research/index.yaml`](../research/index.yaml) · [`../research/README.md`](../research/README.md) |
 | Rules | [`rules/`](rules/) |
 | Feature workflow | [`workflows/feature-development.md`](workflows/feature-development.md) |
@@ -79,6 +80,7 @@ Contains long-lived engineering specifications and pointer documents for externa
 Current entries:
 
 * [`cs345-project-specification.md`](specs/cs345-project-specification.md) — pointer to the official course specification (Markdown default; PDF verify-only)
+* [`ci-and-quality-gates.md`](specs/ci-and-quality-gates.md) — Phase 1 GitHub Actions jobs (`branch-name`, `quality`, `submission-export`)
 
 Examples of specifications that may be added later:
 
