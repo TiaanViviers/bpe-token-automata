@@ -111,7 +111,8 @@ git pull --ff-only origin main
 git switch -c feature/<short-description>
 ```
 
-Agents must not create or switch branches without explicit permission.
+Agents must not create or switch branches without explicit permission, unless
+`git-ops` applies (see [Authorisation via `git-ops`](#authorisation-via-git-ops)).
 
 ## Commit policy
 
@@ -158,7 +159,31 @@ Agents may perform these operations without separate approval:
 - suggest commit boundaries and messages;
 - run export scripts locally without pushing.
 
-Agents require explicit approval before:
+### Authorisation via `git-ops`
+
+The project skill [`.agents/skills/git-ops/SKILL.md`](../../.agents/skills/git-ops/SKILL.md)
+is the standard way to authorise repository-legal Git write work.
+
+Either of the following counts as explicit human approval for the Git
+operations needed to complete the request:
+
+- the human invokes the `git-ops` skill; or
+- the human asks in chat to perform Git write work (for example commit, push,
+  open a PR, create or switch a branch, amend, rebase, or merge).
+
+When `git-ops` applies, the agent must:
+
+- follow this document and
+  [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md);
+- execute the requested repository-legal operations without asking again for
+  conversational sign-off on each Git command;
+- still refuse hard-stop actions listed in the skill's `safety-rails.md`
+  (GitLab publication, force-push to `main`, credentials, remote/settings
+  changes, destructive wipes of unrelated work) unless the human gives a
+  clearer separate instruction for that action.
+
+Without `git-ops` (skill invocation or an equivalent Git-write request),
+agents still require explicit approval before:
 
 - creating or switching branches;
 - staging files;
@@ -173,7 +198,9 @@ Agents require explicit approval before:
 - modifying remotes;
 - publishing to GitLab.
 
-Destructive operations such as `git reset --hard`, force-pushes, and history rewriting require explicit human direction and a clear explanation of the impact.
+Destructive operations such as `git reset --hard`, force-pushes to `main`,
+and rewriting already-shared history require explicit human direction and a
+clear explanation of the impact, even when `git-ops` is active.
 
 ## Pull requests
 

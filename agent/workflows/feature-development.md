@@ -50,7 +50,8 @@ Report pre-existing changes before editing.
 
 ## 3. Prepare the branch
 
-A human approves branch creation or switching.
+A human approves branch creation or switching, or `git-ops` applies
+(`.agents/skills/git-ops/SKILL.md`).
 
 Suggested pattern:
 
@@ -148,7 +149,7 @@ Check for:
 - silent fallback behaviour;
 - duplicated implementation and oracle logic.
 
-Do not stage or commit unless explicitly authorised.
+Do not stage or commit unless explicitly authorised, or `git-ops` applies.
 
 ## 8. Produce a handoff
 

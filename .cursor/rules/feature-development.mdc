@@ -27,4 +27,5 @@ Before implementation:
 
 Implement only the approved scope.
 
-Do not commit or push unless explicitly authorised.
+Do not commit or push unless explicitly authorised, or `git-ops` applies
+(@.agents/skills/git-ops/SKILL.md).
