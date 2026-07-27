@@ -13,10 +13,18 @@ Before any Git-related task, read and follow:
 
 @agent/rules/git-and-branches.md
 
+For Git write work (branch, commit, push, PR, rebase, amend, merge), follow:
+
+@.agents/skills/git-ops/SKILL.md
+
 Also consult these when relevant:
 
 @agent/workflows/feature-development.md
 @agent/templates/handoff.md
+@agent/specs/ci-and-quality-gates.md
 
-Do not perform a Git write operation unless the human has explicitly
-authorised it.
+Invoking `git-ops`, or asking for Git write work in chat, is explicit
+authorisation for repository-legal operations under
+@agent/rules/git-and-branches.md. Do not re-ask for conversational sign-off
+on each command. Hard stops (GitLab publish, force-push to `main`, secrets,
+settings) still need clearer separate human direction.

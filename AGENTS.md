@@ -20,6 +20,7 @@ This file is the entry point for humans and coding agents. Detailed policies liv
 | Ticket / handoff templates | [`agent/templates/`](agent/templates/) |
 | Example ticket / handoff | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |
 | Agent skills | [`.agents/skills/`](.agents/skills/) |
+| Git write skill | [`.agents/skills/git-ops/SKILL.md`](.agents/skills/git-ops/SKILL.md) |
 | Submission-safe code | `project/` |
 
 ## Project overview
@@ -146,9 +147,12 @@ Agents may inspect Git state and diffs freely.
 
 Unless explicitly authorised, do not create or switch branches, stage, commit, amend, rebase, merge, push, force-push, delete branches, modify remotes, change repository settings, or publish to GitLab.
 
-Never commit directly to `main`. Preserve unrelated human changes.
+Authorisation for repository-legal Git write work is granted when the human
+invokes [`.agents/skills/git-ops/SKILL.md`](.agents/skills/git-ops/SKILL.md)
+or asks in chat to perform that Git work. Details and remaining hard stops:
+[`agent/rules/git-and-branches.md`](agent/rules/git-and-branches.md).
 
-Details: [`agent/rules/git-and-branches.md`](agent/rules/git-and-branches.md).
+Never commit directly to `main`. Preserve unrelated human changes.
 
 Feature process: [`agent/workflows/feature-development.md`](agent/workflows/feature-development.md).
 
@@ -214,6 +218,7 @@ Templates: [`agent/templates/ticket.md`](agent/templates/ticket.md), [`agent/tem
 | Handoff template | [`agent/templates/handoff.md`](agent/templates/handoff.md) |
 | Example ticket | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |
 | Agent skills | [`.agents/skills/`](.agents/skills/) |
+| Git write skill | [`.agents/skills/git-ops/SKILL.md`](.agents/skills/git-ops/SKILL.md) |
 
 Additional workflows and specifications may be added under `agent/`. Additional skills may be added under `.agents/skills/`. Do not assume nonexistent files are present.
 

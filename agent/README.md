@@ -21,6 +21,7 @@ Only content under `project/` is eligible for export through the repository’s 
 | Working tickets / handoffs | [`tickets/`](tickets/), [`handoffs/`](handoffs/) |
 | Long-lived specs | [`specs/`](specs/) |
 | Agent skills | [`../.agents/skills/<name>/SKILL.md`](../.agents/skills/) |
+| Git write skill | [`../.agents/skills/git-ops/SKILL.md`](../.agents/skills/git-ops/SKILL.md) |
 
 Read this full map when placing a new document. For ordinary tasks, start from the cheat sheet and the linked rule or workflow.
 
@@ -310,6 +311,7 @@ Example:
 
 ```text
 .agents/skills/grill-me/SKILL.md
+.agents/skills/git-ops/SKILL.md
 ```
 
 Clarifications:
@@ -323,6 +325,9 @@ Clarifications:
 * skills are reusable procedures, not stores of project facts;
 * skills should not duplicate authoritative rules or specifications — they
   should point to those sources when necessary;
+* `git-ops` authorises repository-legal Git write work when invoked or when
+  the human asks for Git write operations in chat (see
+  [`rules/git-and-branches.md`](rules/git-and-branches.md));
 * this `agent/` directory no longer contains a `skills/` subtree.
 
 ## Document lifecycle
