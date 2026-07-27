@@ -4,6 +4,8 @@ Private engineering specification for Phase 1 GitHub Actions quality gates.
 
 Workflow source: [`.github/workflows/checks.yml`](../../.github/workflows/checks.yml).
 
+The GitHub main branch is protected by a ruleset requiring pull requests and the three CI quality gates.
+
 This document does not replace repository settings. Configuring the `main`
 ruleset / required status checks is a separate human operations step.
 
