@@ -89,6 +89,9 @@ Before any GitLab publication:
 ./scripts/configure_gitlab_remote.sh  # once per local clone
 ./scripts/build_submission.sh
 ./scripts/verify_submission.sh
+git fetch gitlab main
+./scripts/create_gitlab_publication_commit.sh \
+  submission refs/remotes/gitlab/main gitlab-publication
 ```
 
 Never bypass verification. Do not push to GitLab unless a human with required access explicitly instructs it.
