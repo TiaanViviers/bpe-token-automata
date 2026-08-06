@@ -16,6 +16,7 @@ Only content under `project/` is eligible for export through the repository’s 
 | Research catalogue | [`../research/index.yaml`](../research/index.yaml) · [`../research/README.md`](../research/README.md) |
 | Rules | [`rules/`](rules/) |
 | Feature workflow | [`workflows/feature-development.md`](workflows/feature-development.md) |
+| GitLab publication workflow | [`workflows/gitlab-publication.md`](workflows/gitlab-publication.md) |
 | Templates | [`templates/ticket.md`](templates/ticket.md), [`templates/handoff.md`](templates/handoff.md) |
 | Example filled docs | [`tickets/TICKET-000-example-infrastructure.md`](tickets/TICKET-000-example-infrastructure.md) |
 | Working tickets / handoffs | [`tickets/`](tickets/), [`handoffs/`](handoffs/) |
@@ -133,11 +134,12 @@ They must not duplicate large sections of repository-wide instructions unnecessa
 
 Contains repeatable project-specific procedures.
 
-Current workflow:
+Current workflows:
 
 * [`feature-development.md`](workflows/feature-development.md)
+* [`gitlab-publication.md`](workflows/gitlab-publication.md)
 
-Future workflows may include bug fixing, paper analysis, architecture decisions, experiment development, pull-request review, and GitLab release preparation.
+Future workflows may include bug fixing, paper analysis, architecture decisions, experiment development, and pull-request review.
 
 A workflow describes how to perform a recurring class of task from beginning to end.
 

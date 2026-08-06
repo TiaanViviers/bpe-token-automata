@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Prevent accidental publication of the private monorepo to university GitLab.
+set -euo pipefail
+
+REMOTE_NAME="${1:-}"
+REMOTE_URL="${2:-}"
+GITLAB_URL='git@git.cs.sun.ac.za:Computer-Science/cs345/2026/cs345/26455900-CS345.git'
+
+# Leave all other remotes untouched. Match the URL too so a direct URL push is
+# still guarded even when Git does not provide the configured remote name.
+if [[ "${REMOTE_NAME}" != "gitlab" && "${REMOTE_URL}" != "${GITLAB_URL}" ]]; then
+  exit 0
+fi
+
+EXPECTED_LOCAL_REF='refs/heads/submission'
+EXPECTED_REMOTE_REF='refs/heads/main'
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [[ "${local_ref}" != "${EXPECTED_LOCAL_REF}" || "${remote_ref}" != "${EXPECTED_REMOTE_REF}" ]]; then
+    cat >&2 <<EOF
+Error: blocked unsafe push to the university GitLab repository.
+
+Only this mapping is allowed:
+  submission -> main
+
+Attempted mapping:
+  ${local_ref} -> ${remote_ref}
+
+Build and verify the project-only export first:
+  ./scripts/build_submission.sh
+  ./scripts/verify_submission.sh
+  git push gitlab
+EOF
+    exit 1
+  fi
+
+  submission_sha="$(git rev-parse refs/heads/submission)"
+  if [[ "${local_sha}" != "${submission_sha}" ]]; then
+    echo "Error: push SHA does not match the local submission branch." >&2
+    exit 1
+  fi
+
+  ./scripts/verify_submission.sh submission
+done
