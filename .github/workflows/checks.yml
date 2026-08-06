@@ -118,7 +118,9 @@ jobs:
           git config user.email "submission-export@users.noreply.github.com"
 
       - name: Test protected GitLab publication commit construction
-        run: ./scripts/test_create_gitlab_publication_commit.sh
+        run: |
+          ./scripts/test_create_gitlab_publication_commit.sh
+          ./scripts/test_gitlab_https_askpass.sh
 
       - name: Build submission subtree from checked-out commit
         run: |
