@@ -85,34 +85,24 @@ jobs:
             make check
           )
 
-      - name: Publish the verified subtree to GitLab main
+      - name: Publish the verified subtree to GitLab main over HTTPS
         env:
-          GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+          GITLAB_HTTPS_TOKEN: ${{ secrets.GITLAB_HTTPS_TOKEN }}
         run: |
           set -euo pipefail
 
-          if [[ -z "${GITLAB_SSH_PRIVATE_KEY}" ]]; then
-            echo "Error: repository or environment secret GITLAB_SSH_PRIVATE_KEY is not configured." >&2
+          if [[ -z "${GITLAB_HTTPS_TOKEN}" ]]; then
+            echo "Error: repository or environment secret GITLAB_HTTPS_TOKEN is not configured." >&2
             exit 1
           fi
 
-          ssh_dir="${RUNNER_TEMP}/gitlab-ssh"
-          key_path="${ssh_dir}/deploy-key"
-          known_hosts_path="${ssh_dir}/known_hosts"
-          install -m 700 -d "${ssh_dir}"
-          install -m 600 /dev/null "${key_path}"
-          printf '%s\n' "${GITLAB_SSH_PRIVATE_KEY}" > "${key_path}"
-
-          # Keys verified from the university GitLab host on 2026-08-06.
-          # Keeping them in source makes host-key changes explicit and reviewable.
-          cat > "${known_hosts_path}" <<'KNOWN_HOSTS'
-          git.cs.sun.ac.za ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIALje46FewP3dJOfZtUSdKq4jAV6VO24J6gcCIWa4EYb
-          git.cs.sun.ac.za ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOWYNrs5gnod/phy0ALz03GpRZkhTIGOESbmP45h6/vEZ8eGcc2LDTYiL0+ZgZNHZdKND6LxX7E2yN7YMfdaiE4=
-          KNOWN_HOSTS
-          chmod 600 "${known_hosts_path}"
-
-          export GIT_SSH_COMMAND="ssh -i ${key_path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=${known_hosts_path}"
-          gitlab_url="git@git.cs.sun.ac.za:Computer-Science/cs345/2026/cs345/26455900-CS345.git"
+          # GitHub-hosted runners time out on the university server's SSH port.
+          # HTTPS uses the server's TLS identity and the repository's askpass
+          # helper; the token exists only in the job environment and is never
+          # embedded in the URL or repository configuration.
+          export GIT_ASKPASS="${GITHUB_WORKSPACE}/scripts/gitlab_https_askpass.sh"
+          export GIT_TERMINAL_PROMPT=0
+          gitlab_url="https://git.cs.sun.ac.za/Computer-Science/cs345/2026/cs345/26455900-CS345.git"
           remote_main_ref="refs/remotes/gitlab-publication/main"
           git fetch --no-tags "${gitlab_url}" "+refs/heads/main:${remote_main_ref}"
 
