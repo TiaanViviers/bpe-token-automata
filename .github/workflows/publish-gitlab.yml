@@ -1,0 +1,119 @@
+# Controlled, manual publication of the verified project/ subtree to GitLab.
+#
+# This workflow deliberately never pushes the GitHub monorepo commit. It creates
+# the same submission branch checked by CI and pushes that exact commit with a
+# normal (non-force) update to GitLab main.
+
+name: Publish project to GitLab
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type "publish project/ to gitlab" exactly
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gitlab-submission-publication
+  cancel-in-progress: false
+
+jobs:
+  publish-gitlab:
+    name: publish-gitlab
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: gitlab-submission
+
+    steps:
+      - name: Validate publication request
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${GITHUB_REF}" != "refs/heads/main" ]]; then
+            echo "Error: GitLab publication is allowed only from GitHub main." >&2
+            echo "Selected ref: ${GITHUB_REF}" >&2
+            exit 1
+          fi
+
+          if [[ "${CONFIRMATION}" != "publish project/ to gitlab" ]]; then
+            echo "Error: publication confirmation did not match exactly." >&2
+            exit 1
+          fi
+
+      - name: Check out the selected main commit (full history)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          enable-cache: false
+          python-version: "3.12"
+
+      - name: Configure temporary Git identity for subtree split
+        run: |
+          set -euo pipefail
+          git config user.name "CS345 Submission Export"
+          git config user.email "submission-export@users.noreply.github.com"
+
+      - name: Build and verify the project-only submission branch
+        run: |
+          set -euo pipefail
+          echo "Exporting project/ from GitHub commit: $(git rev-parse HEAD)"
+          ./scripts/build_submission.sh
+          ./scripts/verify_submission.sh
+
+      - name: Re-check the exported project independently
+        run: |
+          set -euo pipefail
+          export_dir="$(mktemp -d)"
+          trap 'rm -rf "${export_dir}"' EXIT
+
+          git archive submission | tar -x -C "${export_dir}"
+          (
+            cd "${export_dir}"
+            uv sync --frozen
+            make check
+          )
+
+      - name: Push the verified subtree commit to GitLab main
+        env:
+          GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${GITLAB_SSH_PRIVATE_KEY}" ]]; then
+            echo "Error: repository or environment secret GITLAB_SSH_PRIVATE_KEY is not configured." >&2
+            exit 1
+          fi
+
+          ssh_dir="${RUNNER_TEMP}/gitlab-ssh"
+          key_path="${ssh_dir}/deploy-key"
+          known_hosts_path="${ssh_dir}/known_hosts"
+          install -m 700 -d "${ssh_dir}"
+          install -m 600 /dev/null "${key_path}"
+          printf '%s\n' "${GITLAB_SSH_PRIVATE_KEY}" > "${key_path}"
+
+          # Keys verified from the university GitLab host on 2026-08-06.
+          # Keeping them in source makes host-key changes explicit and reviewable.
+          cat > "${known_hosts_path}" <<'KNOWN_HOSTS'
+          git.cs.sun.ac.za ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIALje46FewP3dJOfZtUSdKq4jAV6VO24J6gcCIWa4EYb
+          git.cs.sun.ac.za ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOWYNrs5gnod/phy0ALz03GpRZkhTIGOESbmP45h6/vEZ8eGcc2LDTYiL0+ZgZNHZdKND6LxX7E2yN7YMfdaiE4=
+          KNOWN_HOSTS
+          chmod 600 "${known_hosts_path}"
+
+          export GIT_SSH_COMMAND="ssh -i ${key_path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=${known_hosts_path}"
+          gitlab_url="git@git.cs.sun.ac.za:Computer-Science/cs345/2026/cs345/26455900-CS345.git"
+          submission_commit="$(git rev-parse submission)"
+
+          echo "Publishing verified submission commit ${submission_commit} to GitLab main."
+          git push --dry-run "${gitlab_url}" "${submission_commit}:refs/heads/main"
+          git push "${gitlab_url}" "${submission_commit}:refs/heads/main"

@@ -17,6 +17,7 @@ This file is the entry point for humans and coding agents. Detailed policies liv
 | Research / citation rules | [`agent/rules/research-sources.md`](agent/rules/research-sources.md) |
 | Testing / correctness rules | [`agent/rules/testing-and-correctness.md`](agent/rules/testing-and-correctness.md) |
 | Feature workflow | [`agent/workflows/feature-development.md`](agent/workflows/feature-development.md) |
+| GitLab publication workflow | [`agent/workflows/gitlab-publication.md`](agent/workflows/gitlab-publication.md) |
 | Ticket / handoff templates | [`agent/templates/`](agent/templates/) |
 | Example ticket / handoff | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |
 | Agent skills | [`.agents/skills/`](.agents/skills/) |
@@ -85,11 +86,15 @@ A future `project/scripts/` directory may legitimately export as root `scripts/`
 Before any GitLab publication:
 
 ```bash
+./scripts/configure_gitlab_remote.sh  # once per local clone
 ./scripts/build_submission.sh
 ./scripts/verify_submission.sh
 ```
 
 Never bypass verification. Do not push to GitLab unless a human with required access explicitly instructs it.
+
+For the controlled GitHub Actions release procedure and one-time credential
+setup, follow [`agent/workflows/gitlab-publication.md`](agent/workflows/gitlab-publication.md).
 
 ## Canonical authority order
 
@@ -214,6 +219,7 @@ Templates: [`agent/templates/ticket.md`](agent/templates/ticket.md), [`agent/tem
 | Research rules | [`agent/rules/research-sources.md`](agent/rules/research-sources.md) |
 | Testing rules | [`agent/rules/testing-and-correctness.md`](agent/rules/testing-and-correctness.md) |
 | Feature workflow | [`agent/workflows/feature-development.md`](agent/workflows/feature-development.md) |
+| GitLab publication workflow | [`agent/workflows/gitlab-publication.md`](agent/workflows/gitlab-publication.md) |
 | Ticket template | [`agent/templates/ticket.md`](agent/templates/ticket.md) |
 | Handoff template | [`agent/templates/handoff.md`](agent/templates/handoff.md) |
 | Example ticket | [`agent/tickets/TICKET-000-example-infrastructure.md`](agent/tickets/TICKET-000-example-infrastructure.md) |

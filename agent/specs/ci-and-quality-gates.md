@@ -19,8 +19,11 @@ GitHub Actions on this repository exists to:
 * validate that the standalone `project/` subtree export installs and checks
   independently.
 
-It does **not** prove that a marker’s machine is identical to CI, and it does
-not publish to GitLab.
+It does **not** prove that a marker’s machine is identical to CI. The ordinary
+checks workflow does not publish to GitLab; controlled publication is isolated
+in the manual [`Publish project to GitLab`](../../.github/workflows/publish-gitlab.yml)
+workflow and documented in the
+[`GitLab publication workflow`](../workflows/gitlab-publication.md).
 
 ## Current required PR jobs
 
@@ -111,16 +114,25 @@ Mentioned for planning only — **not** implemented in Phase 1:
 
 ```text
 manual full-verification workflow
-manual GitLab publication workflow
 GitLab clean-environment CI
 long experiment runners
 ```
+
+## Manual GitLab publication
+
+GitLab publication is deliberately not a required PR check and never runs on a
+push or pull request. The separate manual workflow accepts only GitHub `main`,
+repeats the export verification and standalone project checks, and pushes only
+the generated subtree commit using a dedicated GitLab deploy key.
+
+The publication job is not evidence that ordinary CI passed for a different
+commit: it validates the exact `main` commit selected for the manual run.
 
 ## Limitations
 
 * GitHub Actions does not prove a human marker’s machine matches CI.
 * Passing CI does not replace partner review or formal source fidelity.
 * The uploaded submission artifact is a CI convenience only; it is not an
-  official release and must not be pushed to GitLab without explicit human
-  approval and the separate publication process.
+  official release and must not be pushed to GitLab outside the controlled
+  publication process.
 * Action major-version upgrades and ruleset wiring remain follow-up work.

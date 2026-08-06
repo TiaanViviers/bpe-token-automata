@@ -260,6 +260,15 @@ Create it using:
 ./scripts/verify_submission.sh
 ```
 
+For each local clone, enable the repository-owned GitLab push guard:
+
+```bash
+./scripts/configure_gitlab_remote.sh
+```
+
+With the guard configured, `git push gitlab` maps only local `submission` to
+GitLab `main`, and the pre-push hook rejects other ref mappings to that remote.
+
 Rules:
 
 - do not edit it directly;
@@ -338,3 +347,5 @@ Before publication:
 9. push using authorised credentials.
 
 Never add GitLab credentials to the repository.
+Use [`../workflows/gitlab-publication.md`](../workflows/gitlab-publication.md)
+for the controlled manual GitHub Actions procedure and local push guard.
