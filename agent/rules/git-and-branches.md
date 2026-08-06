@@ -266,8 +266,9 @@ For each local clone, enable the repository-owned GitLab push guard:
 ./scripts/configure_gitlab_remote.sh
 ```
 
-With the guard configured, `git push gitlab` maps only local `submission` to
-GitLab `main`, and the pre-push hook rejects other ref mappings to that remote.
+With the guard configured, `git push gitlab` maps only local
+`gitlab-publication` to GitLab `main`. The pre-push hook rejects other ref
+mappings and verifies that the publication tree exactly matches `submission`.
 
 Rules:
 
@@ -276,6 +277,19 @@ Rules:
 - do not treat it as an ordinary development branch;
 - recreate it from the intended `main` commit;
 - verify it before any GitLab push.
+
+The local `gitlab-publication` branch is also generated, not authored. Create
+it only after fetching GitLab `main`:
+
+```bash
+git fetch gitlab main
+./scripts/create_gitlab_publication_commit.sh \
+  submission refs/remotes/gitlab/main gitlab-publication
+```
+
+It preserves the verified subtree as its exact tree and includes the current
+GitLab tip as an ancestor, allowing a normal push to protected `main`. Do not
+edit it or merge it into GitHub branches.
 
 Only a human with authorised GitLab credentials may approve publication.
 

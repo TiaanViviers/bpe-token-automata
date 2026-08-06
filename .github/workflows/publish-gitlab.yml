@@ -1,8 +1,9 @@
 # Controlled, manual publication of the verified project/ subtree to GitLab.
 #
-# This workflow deliberately never pushes the GitHub monorepo commit. It creates
-# the same submission branch checked by CI and pushes that exact commit with a
-# normal (non-force) update to GitLab main.
+# This workflow never pushes the GitHub monorepo commit. It creates the same
+# submission branch checked by CI, then builds a normal fast-forward publication
+# merge whose tree is exactly that verified submission tree. This accommodates
+# protected GitLab branches and preserves subtree authorship without force-pushes.
 
 name: Publish project to GitLab
 
@@ -84,7 +85,7 @@ jobs:
             make check
           )
 
-      - name: Push the verified subtree commit to GitLab main
+      - name: Publish the verified subtree to GitLab main
         env:
           GITLAB_SSH_PRIVATE_KEY: ${{ secrets.GITLAB_SSH_PRIVATE_KEY }}
         run: |
@@ -112,8 +113,17 @@ jobs:
 
           export GIT_SSH_COMMAND="ssh -i ${key_path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=${known_hosts_path}"
           gitlab_url="git@git.cs.sun.ac.za:Computer-Science/cs345/2026/cs345/26455900-CS345.git"
-          submission_commit="$(git rev-parse submission)"
+          remote_main_ref="refs/remotes/gitlab-publication/main"
+          git fetch --no-tags "${gitlab_url}" "+refs/heads/main:${remote_main_ref}"
 
-          echo "Publishing verified submission commit ${submission_commit} to GitLab main."
-          git push --dry-run "${gitlab_url}" "${submission_commit}:refs/heads/main"
-          git push "${gitlab_url}" "${submission_commit}:refs/heads/main"
+          publication_commit="$(
+            GITHUB_SOURCE_COMMIT="${GITHUB_SHA}" \
+              ./scripts/create_gitlab_publication_commit.sh \
+              submission \
+              "${remote_main_ref}" \
+              gitlab-publication
+          )"
+
+          echo "Publishing guarded commit ${publication_commit} to GitLab main."
+          git push --dry-run "${gitlab_url}" "refs/heads/gitlab-publication:refs/heads/main"
+          git push "${gitlab_url}" "refs/heads/gitlab-publication:refs/heads/main"

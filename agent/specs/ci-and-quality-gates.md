@@ -123,7 +123,10 @@ long experiment runners
 GitLab publication is deliberately not a required PR check and never runs on a
 push or pull request. The separate manual workflow accepts only GitHub `main`,
 repeats the export verification and standalone project checks, and pushes only
-the generated subtree commit using a dedicated GitLab deploy key.
+the generated publication commit using a dedicated GitLab SSH credential. The
+publication commit has exactly the verified subtree tree, retains subtree
+history as a parent, and descends from the fetched GitLab tip so the update is
+a normal fast-forward to protected `main`.
 
 The publication job is not evidence that ordinary CI passed for a different
 commit: it validates the exact `main` commit selected for the manual run.
