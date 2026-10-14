@@ -1,0 +1,3 @@
+# Original example: Algorithm 2 on the finite language L = {ab}.
+# Base automaton: data/automata/finite_ab.yaml.
+a b

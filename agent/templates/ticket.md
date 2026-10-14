@@ -33,17 +33,13 @@ List the exact sources that govern this task.
 
 The ticket includes:
 
-- 
-- 
-- 
+-
 
 ## Non-goals
 
 The ticket explicitly excludes:
 
-- 
-- 
-- 
+-
 
 ## Preconditions
 
@@ -52,37 +48,30 @@ Before implementation:
 - [ ] Relevant formal definitions are understood.
 - [ ] Major ambiguity has been resolved or recorded.
 - [ ] Required interfaces or dependencies exist.
-- [ ] The branch and repository state are suitable.
+- [ ] `26455900-CS345/` is on `main` and its working state is understood.
+- [ ] Pre-existing changes have been identified and can be preserved.
 
 ## Proposed design
 
-Describe:
-
-- data model;
-- public interfaces;
-- invariants;
-- algorithmic steps;
-- error behaviour;
-- deterministic behaviour;
-- representation decisions.
+Describe the data model, public interfaces, invariants, algorithmic steps, error behaviour, deterministic behaviour, and representation decisions.
 
 For formal work, distinguish paper semantics from implementation representation.
 
 ## Files likely to change
 
+Paths below are relative to the workspace root:
+
 ```text
-project/src/...
-project/tests/...
-project/docs/...
+26455900-CS345/src/...
+26455900-CS345/tests/...
+26455900-CS345/docs/...
 ```
 
 This list is guidance, not permission for unrelated changes.
 
 ## Acceptance criteria
 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ]
 
 Criteria must be observable and testable.
 
@@ -90,23 +79,23 @@ Criteria must be observable and testable.
 
 ### Unit tests
 
-- 
+-
 
 ### Regression tests
 
-- 
+-
 
 ### Differential or exhaustive tests
 
-- 
+-
 
 ### Property or equivalence tests
 
-- 
+-
 
 ### Negative and special cases
 
-- 
+-
 
 ## Documentation changes
 
@@ -119,12 +108,12 @@ Criteria must be observable and testable.
 
 State specific expected updates:
 
-- 
+-
 
 ## Validation commands
 
 ```bash
-cd project
+cd 26455900-CS345
 make check
 ```
 
@@ -145,7 +134,7 @@ Additional commands:
 
 ## Open questions
 
-- 
+-
 
 Do not begin implementation while a blocking question remains unresolved.
 
@@ -156,7 +145,8 @@ Do not begin implementation while a blocking question remains unresolved.
 - [ ] Required tests added and passing.
 - [ ] Relevant documentation updated.
 - [ ] `make check` passes.
-- [ ] No private material entered `project/`.
-- [ ] Handoff produced.
+- [ ] No private workspace material entered `26455900-CS345/`.
+- [ ] Handoff produced where appropriate.
 - [ ] Human review completed.
 - [ ] Both partners can explain the implementation.
+

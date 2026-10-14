@@ -129,5 +129,5 @@ If offering an external second opinion (another model/CLI):
 ## Constraints
 
 * Follow `@agent/rules/git-and-branches.md`.
-* Do not place private doubt notes under `project/`.
+* Do not place private doubt notes under `26455900-CS345/`.
 * Honesty beats false certification of understanding or correctness.

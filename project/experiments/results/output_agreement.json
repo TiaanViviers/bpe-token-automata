@@ -1,0 +1,37 @@
+{
+  "host": {
+    "python": "3.12.3",
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "processor": "x86_64",
+    "cpu_count": 16,
+    "host_memory_bytes": 16129409024,
+    "libraries": {
+      "pyyaml": "6.0.3",
+      "hypothesis": "6.161.5"
+    }
+  },
+  "notes": "Exact token-sequence match rate. Comparable sets match Section 6. A rate other than 1.0 is a bug. Broader evidence: docs/testing.md.",
+  "rows": [
+    {
+      "set": "example2_ab_le8",
+      "n_strings": 511,
+      "n_exact_sequence_match": 511,
+      "match_rate": 1.0,
+      "comparators": "transducer_vs_reference"
+    },
+    {
+      "set": "unary_a_le8",
+      "n_strings": 9,
+      "n_exact_sequence_match": 9,
+      "match_rate": 1.0,
+      "comparators": "transducer_vs_reference"
+    },
+    {
+      "set": "example2_ab_le6_minbpe",
+      "n_strings": 127,
+      "n_exact_sequence_match": 127,
+      "match_rate": 1.0,
+      "comparators": "transducer_vs_minbpe"
+    }
+  ]
+}

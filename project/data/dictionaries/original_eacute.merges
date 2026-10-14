@@ -1,0 +1,3 @@
+# Original example: precomposed U+00E9 (é) as two UTF-8 bytes, not one symbol.
+# U+00E9 LATIN SMALL LETTER E WITH ACUTE = C3 A9.
+\xc3 \xa9

@@ -5,8 +5,8 @@ globs:
   - "agent/handoffs/**"
   - "agent/plans/**"
   - "agent/specs/**"
-  - "project/src/**"
-  - "project/tests/**"
+  - "26455900-CS345/src/**"
+  - "26455900-CS345/tests/**"
 alwaysApply: false
 ---
 
@@ -18,7 +18,7 @@ Follow:
 
 Before implementation:
 
-1. inspect Git state;
+1. inspect Git state in `26455900-CS345/`;
 2. locate the approved ticket;
 3. read relevant formal sources and project decisions;
 4. produce a bounded implementation plan;
@@ -27,5 +27,5 @@ Before implementation:
 
 Implement only the approved scope.
 
-Do not commit or push unless explicitly authorised, or `git-ops` applies
-(@.agents/skills/git-ops/SKILL.md).
+Do not commit or push unless explicitly authorised. Work directly on `main`;
+do not create a feature branch, pull request, or merge request unless asked.

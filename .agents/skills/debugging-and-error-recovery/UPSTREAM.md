@@ -6,4 +6,5 @@
 - Imported date: 2026-07-26
 - Imported commit or version: upstream `main` tip at review `7829ffd90d973b6325f5f12f1b1226dcace74443` (2026-07-26); installer content hash in `skills-lock.json`: `1a119d27e8f1d27ed6317adf3115826336491346780dcb7d7a7a7f79fe3ffe10`
 - Local modifications: Retargeted triage to tokenizer/automaton/transducer/oracle failures; require preservation of dictionaries/inputs/seeds; project `make check` commands; forbid weakening tests; restrict disruptive `git bisect` without approval; keep untrusted-error-output rule.
+- Workspace migration (2026-09-07): Retargeted test paths and validation commands to `26455900-CS345/` and removed export-verification terminology.
 - Licence: MIT License (Copyright (c) 2025 Addy Osmani), confirmed via upstream `LICENSE` on GitHub.

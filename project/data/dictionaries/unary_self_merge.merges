@@ -1,0 +1,4 @@
+# Unary self-merge chain (project fixture; [5] has no unary figure).
+# D = [a⫽a, aa⫽a] over Σ = {a}.
+a a
+aa a

@@ -7,15 +7,19 @@ Read and follow @AGENTS.md before performing repository work.
 
 Key boundaries:
 
-- `project/` is the only GitLab-exportable subtree.
-- `agent/`, `.agents/`, `skills-lock.json`, `research/`, `.cursor/`,
-  `.github/`, and root-level monorepo `scripts/` are private GitHub-side
-  development resources.
+- `26455900-CS345/` is the standalone university GitLab repository and the only
+  directory that is version controlled.
+- Start at the workspace root for context, but make project changes and run
+  project commands, tests, and Git operations against `26455900-CS345/`.
+- `agent/`, `.agents/`, `skills-lock.json`, `research/`, `.cursor/`, root
+  `AGENTS.md`, and any root `scripts/` are private local resources.
 - Reusable Agent Skills live under `.agents/skills/`.
 - Official CS345 project specification pointer:
   @agent/specs/cs345-project-specification.md
   (Markdown default; PDF verify-only).
-- Do not commit, push, merge, rebase, modify remotes, or publish without
-  explicit human approval.
+- Work on `main`; do not introduce branches, PRs/MRs, subtree exports,
+  publication commits, or repository synchronisation unless explicitly asked.
+- Do not stage, commit, pull, push, rewrite history, or modify remotes without
+  explicit human authorisation for that Git action.
 - Use the detailed rules referenced by `AGENTS.md` when relevant.
 - Do not duplicate authoritative policy into new files.

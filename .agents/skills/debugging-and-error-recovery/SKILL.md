@@ -17,7 +17,7 @@ root cause. Guessing wastes time and hides formal mistakes.
 
 * Tests fail after a change
 * Tokenizer/automaton/transducer behaviour disagrees with an oracle or paper
-* Build, lint, typecheck, or export verification fails
+* Build, lint, typecheck, or project validation fails
 * An experiment times out or exhausts memory
 * A bug report arrives
 
@@ -40,13 +40,13 @@ root cause. Guessing wastes time and hides formal mistakes.
 5. **Consult** the relevant formal source
    (`@agent/rules/research-sources.md`; authority order in `@AGENTS.md`).
 6. **Identify** the smallest responsible layer.
-7. **Add** a deterministic regression test under `project/tests/` that fails
+7. **Add** a deterministic regression test under `26455900-CS345/tests/` that fails
    without the fix and passes with it.
 8. **Implement** the smallest justified fix — only after the cause is clear.
 9. **Rerun** focused checks, then broader validation:
 
    ```bash
-   cd project
+   cd 26455900-CS345
    # focused test command as appropriate, then:
    make check
    ```

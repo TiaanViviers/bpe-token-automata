@@ -52,7 +52,7 @@ understanding (can explain, give examples, handle counterexamples).
 * Follow `@AGENTS.md` and `@agent/rules/git-and-branches.md`.
 * Do not modify files unless the human explicitly asks for a written artefact
   after the grill.
-* Do not place private notes under `project/`.
+* Do not place private notes under `26455900-CS345/`.
 * Follow the canonical source-authority order in `AGENTS.md` when formal claims
   arise; surface ambiguity rather than resolving it silently.
 

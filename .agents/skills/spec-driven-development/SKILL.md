@@ -64,8 +64,9 @@ agent/specs/baseline-token-automaton.md
 
 Do **not** create a generic root-level `SPEC.md`.
 
-Do **not** place specs under `project/` unless promoting human-reviewed
-submission-safe documentation later (out of scope for this skill).
+Do **not** place private specs under `26455900-CS345/` unless promoting
+human-reviewed, assessable technical documentation later (out of scope for
+this skill).
 
 ## Spec content
 
@@ -83,7 +84,7 @@ Tailor terminology to this project. Cover at least:
    see `@agent/rules/testing-and-correctness.md`
 9. **Risks**
 10. **Open questions** — especially unresolved formal questions
-11. **Validation commands** — ordinarily `cd project && make check`
+11. **Validation commands** — ordinarily `cd 26455900-CS345 && make check`
 
 Surface assumptions before writing body content:
 
@@ -108,6 +109,7 @@ If the human next asks for planning or tickets, that is a separate invocation.
 
 ## Living specs
 
-Update the spec when approved decisions change. Specs belong in version control
-under `agent/specs/`. Committing remains a separately authorised Git action —
-see `@agent/rules/git-and-branches.md`.
+Update the spec when approved decisions change. Specs remain private local
+material under `agent/specs/`; they are not tracked by the assessable project
+repository. If selected technical content is later promoted into
+`26455900-CS345/docs/`, rewrite and review it for that audience.

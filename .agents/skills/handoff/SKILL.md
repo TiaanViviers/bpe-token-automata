@@ -6,8 +6,6 @@ description: >
   session, switching contributors, or the user asks for a handoff. Trigger
   phrases include "write a handoff", "hand this off", and "session summary for
   the next agent". Inspect real Git status and diffs. Do not commit or push.
-argument-hint: "What will the next session be used for?"
-disable-model-invocation: true
 ---
 
 # Handoff
@@ -45,18 +43,19 @@ agent/handoffs/2026-07-26-<short-description>.md
 
 Do **not** write handoffs to `/tmp` or another transient directory.
 
-Do **not** place handoffs under `project/`.
+Do **not** place handoffs under `26455900-CS345/`.
 
 ## Required inspection
 
-Before writing, inspect actual state:
+Before writing, inspect the actual repository explicitly from the workspace
+root:
 
 ```bash
-git status
-git branch --show-current
-git log --oneline -5
-git diff
-git diff --cached
+git -C 26455900-CS345 status
+git -C 26455900-CS345 branch --show-current
+git -C 26455900-CS345 log --oneline -5
+git -C 26455900-CS345 diff
+git -C 26455900-CS345 diff --cached
 ```
 
 Record only work genuinely completed. Do not list planned work as done.
@@ -65,7 +64,7 @@ Record only work genuinely completed. Do not list planned work as done.
 
 Complete every section of the template, including:
 
-* task, ticket, branch, scope, and status;
+* task, ticket, repository, branch (`main` by default), scope, and status;
 * files changed and their roles;
 * sources consulted (Markdown vs PDF where relevant);
 * decisions made, with temporary vs approved distinguished;
@@ -89,7 +88,7 @@ Redact secrets, API keys, passwords, and unnecessary personal data.
 
 ## Prohibited actions
 
-* Do not stage, commit, amend, push, or open a pull request.
+* Do not stage, commit, amend, or push.
 * Do not switch or create branches.
 * Do not claim unperformed validation succeeded.
 

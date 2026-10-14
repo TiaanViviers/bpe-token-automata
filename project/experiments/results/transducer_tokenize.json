@@ -1,0 +1,60 @@
+{
+  "python": "3.12.3",
+  "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+  "repeats": 7,
+  "notes": "Compile time is separated from tokenize time. Peak memory is tracemalloc in this process, not RSS. No pre-tokenization. Dictionaries are tiny; this is not \u00a75.6.",
+  "rows": [
+    {
+      "case": "example2_ababab",
+      "n_bytes": 64,
+      "n_rules": 2,
+      "n_transducer_states": 6,
+      "compile_seconds_median": 0.00014377900515682995,
+      "compile_peak_bytes": 12162,
+      "tokenize_seconds_median": 1.3043987564742565e-05,
+      "tokenize_peak_bytes": 664,
+      "reference_seconds_median": 7.540099613834172e-05,
+      "reference_peak_bytes": 3336,
+      "token_sequence_agreement": true
+    },
+    {
+      "case": "self_merge_a_n",
+      "n_bytes": 256,
+      "n_rules": 1,
+      "n_transducer_states": 2,
+      "compile_seconds_median": 5.8007994084618986e-05,
+      "compile_peak_bytes": 6221,
+      "tokenize_seconds_median": 4.983300459571183e-05,
+      "tokenize_peak_bytes": 2128,
+      "reference_seconds_median": 0.0002450890024192631,
+      "reference_peak_bytes": 12936,
+      "token_sequence_agreement": true
+    },
+    {
+      "case": "unary_chain_a_n",
+      "n_bytes": 128,
+      "n_rules": 2,
+      "n_transducer_states": 5,
+      "compile_seconds_median": 9.326500003226101e-05,
+      "compile_peak_bytes": 10029,
+      "tokenize_seconds_median": 2.5387998903170228e-05,
+      "tokenize_peak_bytes": 1104,
+      "reference_seconds_median": 8.466899453196675e-05,
+      "reference_peak_bytes": 6536,
+      "token_sequence_agreement": true
+    },
+    {
+      "case": "empty_dict_ab",
+      "n_bytes": 128,
+      "n_rules": 0,
+      "n_transducer_states": 1,
+      "compile_seconds_median": 2.6007997803390026e-05,
+      "compile_peak_bytes": 4212,
+      "tokenize_seconds_median": 2.6009001885540783e-05,
+      "tokenize_peak_bytes": 2128,
+      "reference_seconds_median": 1.2474003597162664e-05,
+      "reference_peak_bytes": 6576,
+      "token_sequence_agreement": true
+    }
+  ]
+}
