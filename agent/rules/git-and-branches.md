@@ -1,365 +1,135 @@
-# Git and Branching Rules
+# Git and Repository Rules
 
 ## Purpose
 
-This document defines the repository's Git workflow and the permissions expected of human contributors and coding agents.
+This document defines the simple Git workflow for the assessable project and protects the boundary around private AI support material.
 
-The goals are:
+## Only Git repository
 
-- preserve a clear and reviewable history;
-- protect `main`;
-- prevent accidental loss of work;
-- keep private material outside the GitLab submission;
-- ensure every meaningful change is reviewed before integration.
-
-## Repository model
-
-The private GitHub repository is the primary collaborative repository.
-
-The university GitLab repository receives a filtered history generated only from:
+The only real Git repository is:
 
 ```text
-project/
+~/Projects/automata_345/26455900-CS345/
 ```
 
-The GitLab export is created with:
+Start from the workspace root when private context is useful, but use an explicit repository target:
 
 ```bash
-git subtree split --prefix=project
+git -C 26455900-CS345 status
+git -C 26455900-CS345 branch --show-current
+git -C 26455900-CS345 log --oneline -5
 ```
 
-No one should develop directly on the generated submission branch.
+Alternatively, `cd 26455900-CS345` before running Git commands.
 
-## Permanent branches
+Never run Git commands from `~/Projects/automata_345`, initialise a repository there, or treat stale root-level metadata as authoritative.
 
-The repository uses one permanent development branch:
+## Branch model
 
-```text
-main
-```
+`main` is the normal and only working branch.
 
-There is no permanent `dev` branch.
+Do not create feature branches, ticket branches, submission branches, publication branches, pull requests, or merge requests unless the human explicitly requests an exception. Do not resurrect the former development-repository/subtree-publication model.
 
-All meaningful work should occur on short-lived branches and return to `main` through a pull request.
+Before editing, confirm the actual repository is on `main`. If it is not, report the state rather than switching silently.
 
-## Branch naming
+## Normal workflow
 
-Use one of the following prefixes:
-
-```text
-feature/<short-description>
-fix/<short-description>
-test/<short-description>
-docs/<short-description>
-experiment/<short-description>
-research/<short-description>
-ci/<short-description>
-chore/<short-description>
-```
-
-The source branch of a pull request into `main` must match:
-
-```text
-^(feature|fix|test|docs|experiment|research|ci|chore)/[a-z0-9]+(-[a-z0-9]+)*$
-```
-
-Examples:
-
-```text
-feature/dictionary-validator
-fix/self-merge-transition-copy
-test/exhaustive-small-dictionaries
-docs/unicode-symbol-policy
-experiment/baseline-prefix-scaling
-research/transducer-determinisation
-ci/github-quality-gates
-chore/update-dependencies
-```
-
-Use lowercase words separated by hyphens.
-
-Do not include student names, agent names, or vague labels such as:
-
-```text
-feature/stuff
-fix/changes
-work/latest
-```
-
-## Starting work
-
-Before creating or using a feature branch:
+When the request authorises the corresponding Git writes, work directly in the repository:
 
 ```bash
+cd 26455900-CS345
 git status
-git branch --show-current
-git log --oneline -5
-git fetch origin
+git add <files>
+git commit -m "<message>"
+git push origin main
 ```
 
-A human should confirm that:
+Use `git pull --ff-only origin main` only when updating from the remote is required and authorised. Do not create merge commits as a side effect of pulling.
 
-- the current work belongs on a new branch;
-- the branch starts from the intended `main` commit;
-- unrelated local changes have been handled safely.
+The configured university GitLab remote is `origin`. Special publication remotes and push refspecs are obsolete.
 
-Suggested human workflow:
+## Agent permissions
 
-```bash
-git switch main
-git pull --ff-only origin main
-git switch -c feature/<short-description>
-```
+Agents may inspect status, logs, tracked files, remotes, and diffs without separate approval.
 
-Agents must not create or switch branches without explicit permission, unless
-`git-ops` applies (see [Authorisation via `git-ops`](#authorisation-via-git-ops)).
+A human request to stage, commit, pull, or push authorises only the Git operations reasonably needed for that request. Otherwise, leave changes unstaged and uncommitted.
+
+Separate explicit direction is required for destructive or repository-administration operations, including:
+
+- force-pushing or rewriting shared history;
+- resetting or discarding changes;
+- changing remotes or credentials;
+- changing repository settings;
+- deleting branches or tags.
+
+Never force-push `main`. Never place credentials in files, remote URLs, command arguments, issues, handoffs, or chat.
 
 ## Commit policy
 
-Commits should represent coherent, explainable changes.
-
-Prefer commit messages such as:
+Commits should be coherent, explainable, and limited to the requested scope. Prefer descriptive messages such as:
 
 ```text
 feat(dictionary): validate merge dependencies
 test(dfa): add self-merge regression cases
 fix(serialization): sort transitions deterministically
-docs(research): record Unicode symbol decision
+docs(research): record Unicode symbol policy
 ```
 
-Avoid:
+Avoid vague messages such as `update`, `fix stuff`, `agent changes`, or `final`.
 
-```text
-update
-fix stuff
-agent changes
-final
-wip
-```
+Before committing:
 
-Each commit should ideally:
+- run relevant checks;
+- inspect `git status` and `git diff`;
+- stage explicit paths, not unrelated changes;
+- confirm no credentials, private workspace material, caches, or generated junk entered the repository;
+- ensure the commit can be understood without chat history.
 
-- build successfully;
-- preserve relevant tests;
-- avoid unrelated formatting or refactors;
-- contain no credentials or private local files;
-- remain understandable without agent conversation context.
+## Private workspace boundary
 
-Do not combine implementation, unrelated cleanup, large generated documentation, and experiment outputs in one commit.
-
-## Agent Git permissions
-
-Agents may perform these operations without separate approval:
-
-- inspect `git status`;
-- inspect branches and logs;
-- inspect staged and unstaged diffs;
-- compare branches;
-- suggest branch names;
-- suggest commit boundaries and messages;
-- run export scripts locally without pushing.
-
-### Authorisation via `git-ops`
-
-The project skill [`.agents/skills/git-ops/SKILL.md`](../../.agents/skills/git-ops/SKILL.md)
-is the standard way to authorise repository-legal Git write work.
-
-Either of the following counts as explicit human approval for the Git
-operations needed to complete the request:
-
-- the human invokes the `git-ops` skill; or
-- the human asks in chat to perform Git write work (for example commit, push,
-  open a PR, create or switch a branch, amend, rebase, or merge).
-
-When `git-ops` applies, the agent must:
-
-- follow this document and
-  [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md);
-- execute the requested repository-legal operations without asking again for
-  conversational sign-off on each Git command;
-- still refuse hard-stop actions listed in the skill's `safety-rails.md`
-  (GitLab publication, force-push to `main`, credentials, remote/settings
-  changes, destructive wipes of unrelated work) unless the human gives a
-  clearer separate instruction for that action.
-
-Without `git-ops` (skill invocation or an equivalent Git-write request),
-agents still require explicit approval before:
-
-- creating or switching branches;
-- staging files;
-- committing;
-- amending;
-- rebasing;
-- merging;
-- pulling with merge behaviour;
-- pushing;
-- force-pushing;
-- deleting branches;
-- modifying remotes;
-- publishing to GitLab.
-
-Destructive operations such as `git reset --hard`, force-pushes to `main`,
-and rewriting already-shared history require explicit human direction and a
-clear explanation of the impact, even when `git-ops` is active.
-
-## Pull requests
-
-Each meaningful branch should return through a GitHub pull request.
-
-A pull request should include:
-
-- the problem being solved;
-- the approved scope;
-- important design decisions;
-- formal sources used, where relevant;
-- tests added or changed;
-- validation commands and outcomes;
-- known limitations;
-- follow-up work that was deliberately excluded.
-
-Before merge:
-
-```bash
-cd project
-make check
-```
-
-GitHub Actions must also pass the three Phase 1 jobs:
-
-```text
-branch-name
-quality
-submission-export
-```
-
-Details: [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md).
-
-The reviewing partner should understand the change well enough to explain it independently.
-
-## Main branch protection
-
-When repository settings permit, configure `main` so that:
-
-- direct pushes are blocked;
-- pull requests are required;
-- required CI checks must pass (`branch-name`, `quality`, `submission-export`);
-- at least one approval is required;
-- stale approvals are dismissed after material changes;
-- force-pushes and deletion are disabled.
-
-Do not change branch-protection / ruleset settings without both partners agreeing.
-
-## Submission branch
-
-The local `submission` branch is generated, not authored.
-
-Create it using:
-
-```bash
-./scripts/build_submission.sh
-./scripts/verify_submission.sh
-```
-
-For each local clone, enable the repository-owned GitLab push guard:
-
-```bash
-./scripts/configure_gitlab_remote.sh
-```
-
-With the guard configured, `git push gitlab` maps only local
-`gitlab-publication` to GitLab `main`. The pre-push hook rejects other ref
-mappings and verifies that the publication tree exactly matches `submission`.
-
-Rules:
-
-- do not edit it directly;
-- do not merge it back into `main`;
-- do not treat it as an ordinary development branch;
-- recreate it from the intended `main` commit;
-- verify it before any GitLab push.
-
-The local `gitlab-publication` branch is also generated, not authored. Create
-it only after fetching GitLab `main`:
-
-```bash
-git fetch gitlab main
-./scripts/create_gitlab_publication_commit.sh \
-  submission refs/remotes/gitlab/main gitlab-publication
-```
-
-It preserves the verified subtree as its exact tree and includes the current
-GitLab tip as an ancestor, allowing a normal push to protected `main`. Do not
-edit it or merge it into GitHub branches.
-
-Only a human with authorised GitLab credentials may approve publication.
-
-## Private material
-
-These root-level paths must remain outside the GitLab export:
+These workspace-root paths remain outside GitLab:
 
 ```text
 AGENTS.md
 agent/
-.agents/
-skills-lock.json
 research/
-.cursor/
-.github/
-scripts/          # monorepo root scripts only
+scripts/
+skills-lock.json
+.agents/
+.codex/
 ```
 
-Clarification:
+The assessable repository may contain its own project-owned paths with similar generic names only when they are legitimate project content. Do not bulk-copy workspace directories into it.
 
-- repository-root `scripts/` contains private monorepo export tooling and must not be copied into `project/`;
-- a future submission-safe `project/scripts/` directory may legitimately appear as root `scripts/` after export;
-- verification rejects known private infrastructure paths and monorepo export script filenames.
+There is no export verifier now because there is no export. Boundary safety comes from making all project edits directly under `26455900-CS345/`, reviewing `git status` and `git diff --cached`, and staging explicit files.
 
-Private material must not be copied into `project/` merely to make it easier for an agent to find.
+## Pre-existing changes
 
-The export verification script is defence in depth, not a substitute for careful review.
+Never assume the working tree is disposable. When unrelated changes exist:
 
-## Handling pre-existing changes
-
-Never assume the working tree is disposable.
-
-When unrelated modifications are present:
-
-- identify them;
-- avoid overwriting them;
-- do not stage them accidentally;
+- identify and preserve them;
+- avoid editing or staging them;
 - report them in the handoff;
-- ask for direction if they block the task.
+- ask for direction only if they block the requested work.
 
-Do not use blanket cleanup commands to make the repository appear clean.
+Do not use blanket cleanup commands to make the tree appear clean.
 
-## Merge conflicts
+## Conflicts and remote divergence
 
-When a conflict occurs:
+When a conflict occurs, identify the intent on both sides, consult the relevant source or approved decision, preserve semantics, rerun tests, and document non-obvious resolutions.
 
-- identify the competing intent on both sides;
-- consult the relevant human-approved design or ticket;
-- preserve semantics, not merely syntax;
-- rerun relevant tests;
-- document non-obvious resolutions.
+Do not choose silently between conflicting formal interpretations. Do not use force or history rewriting to bypass divergence. Report the state and obtain direction when a safe fast-forward workflow is not possible.
 
-An agent must not choose between conflicting formal interpretations silently.
+## Before push
 
-## GitLab publication
+Immediately before an authorised push:
 
-GitLab publication is a controlled release operation.
+1. confirm the current directory/repository is `26455900-CS345/`;
+2. confirm the branch is `main`;
+3. inspect the final commit and status;
+4. confirm relevant validation passed;
+5. push with `git push origin main`;
+6. report the pushed commit and any remaining local changes.
 
-Before publication:
+No publication, synchronisation, or second-repository verification step is required.
 
-1. ensure `main` is the intended source;
-2. ensure the working tree is clean;
-3. run `make check`;
-4. build the submission subtree;
-5. verify forbidden content is absent;
-6. test the exported project independently;
-7. inspect the exported file list;
-8. obtain explicit human approval;
-9. push using authorised credentials.
-
-Never add GitLab credentials to the repository.
-Use [`../workflows/gitlab-publication.md`](../workflows/gitlab-publication.md)
-for the controlled manual GitHub Actions procedure and local push guard.

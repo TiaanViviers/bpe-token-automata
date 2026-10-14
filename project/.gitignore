@@ -18,6 +18,7 @@ build/
 htmlcov/
 coverage.xml
 .hypothesis/
+tests/hypothesis_failures/*.json
 .mypy_cache/
 .ruff_cache/
 .dmypy.json
@@ -26,6 +27,7 @@ dmypy.json
 # Local experiment scratch (keep tracked summaries under results/)
 results/raw/*
 !results/raw/.gitkeep
+experiments/.cache/
 
 # Secrets
 .env

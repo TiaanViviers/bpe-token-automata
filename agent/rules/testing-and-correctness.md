@@ -233,7 +233,7 @@ Tests should fail clearly when a required computation does not complete.
 Prospective recommended organisation (create directories only when they contain meaningful tests):
 
 ```text
-project/tests/
+26455900-CS345/tests/
 ├── unit/
 ├── regression/
 ├── exhaustive/
@@ -242,15 +242,16 @@ project/tests/
 └── fixtures/
 ```
 
-This layout is not required to exist yet. Place new tests under `project/tests/` in a clear location and expand the tree when families are introduced.
+This layout is not required to exist yet. Place new tests under `26455900-CS345/tests/` in a clear location and expand the tree when families are introduced.
 
 Test names should describe the semantic behaviour being checked.
 
 ## Running tests
 
-From `project/`:
+From the assessable repository:
 
 ```bash
+cd 26455900-CS345
 make test
 make check
 ```

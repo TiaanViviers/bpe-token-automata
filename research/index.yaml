@@ -86,12 +86,14 @@ papers:
 
     conversion:
       tool: marker
-      status: converted-unverified
+      status: partially-verified
       converted_at: 2026-07-26
       known_issues:
         - "Many cross-references resolve to empty anchors (](#))."
         - "Spurious <sup>a</sup> insertions remain in prose."
-        - "Theorem 13 / Corollary 14 math glyphs were restored from the PDF during catalogue cleanup; re-check before relying on that passage alone."
+        - "Theorem 13 / Corollary 14 math glyphs were restored from the PDF during catalogue cleanup; re-checked against PDF pp. 11–12 on 2026-09-13."
+        - "PDF Example 2 prose ('non-ba transitions', line 14) contradicts Algorithm 2 and Figs. 3–4; implement the algorithm and figures."
+        - "Definition 6 allows only one token or epsilon per edge; Fig. 8(b) emits a two-token word. Implement Observation 3 per Definition 6 and subsequential edges per Béal–Carton / Fig. 8(b)."
 
     relevant_topics:
       - token DFA
@@ -119,9 +121,12 @@ papers:
 
     conversion:
       tool: marker
-      status: converted-unverified
+      status: partially-verified
       converted_at: 2026-07-26
-      known_issues: []
+      known_issues:
+        - "Marker mixes the 'O4, see Section 5' annotation into Algorithm 2 line 4."
+        - "Definition 4 Λ={u} when u≠v contradicts Algorithm 2 lines 16–18 and Fig. 2; implement the algorithm."
+        - "Algorithm 2 line 9 'or q = q0' means s2 = q0 (Example 1). Verified PDF pp. 3–5 on 2026-09-13."
 
     relevant_topics:
       - delayed-input automata
@@ -147,11 +152,11 @@ papers:
 
     conversion:
       tool: marker
-      status: converted-unverified
+      status: partially-verified
       converted_at: 2026-07-26
       known_issues:
         - "Original Marker output had severe fi/ff ligature OCR failures; many were mechanically repaired (e.g. #nite→finite, Cho2rut→Choffrut, i2→iff)."
-        - "Residual Marker artefacts may remain; verify algorithms and twinning-property statements against the PDF."
+        - "Residual Marker artefacts may remain outside §2.2; finite-word determinisation (PDF pp. 233–234) was checked on 2026-09-13."
 
     relevant_topics:
       - subsequential transducers

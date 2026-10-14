@@ -1,11 +1,12 @@
 ---
 name: code-review-and-quality
 description: >
-  Conduct multi-axis code review for this repository before merge. Use when
+  Conduct multi-axis code review for this repository before commit, push, or
+  integration. Use when
   reviewing your own, another agent's, or a human's change; after bug fixes; or
   when assessing quality across ticket scope, formal correctness, tests,
-  architecture, docs, and submission-boundary safety. Trigger phrases include
-  "review this", "code review", and "before merge". Produce a review report;
+  architecture, docs, and repository-boundary safety. Trigger phrases include
+  "review this", "code review", and "before pushing". Produce a review report;
   do not automatically rewrite the code.
 ---
 
@@ -17,7 +18,7 @@ human separately authorises that work.
 
 ## When to use
 
-* Before merging a PR or integrating a change
+* Before committing, pushing, or integrating a change
 * After feature implementation or a bug fix
 * When evaluating agent-produced code
 * When asked for a structured review
@@ -40,8 +41,9 @@ Evaluate every change across:
 6. **Performance and scaling risk** — pathological inputs, timeouts, memory;
    honesty about limits
 7. **Documentation and reproducibility** — docs, seeds, commands, limitations
-8. **Submission-boundary safety** — no private `agent/`, `research/`, `.agents/`,
-   or `.cursor/` material under `project/`
+8. **Repository-boundary safety** — no private `agent/`, `research/`, `.agents/`,
+   `.cursor/`, root `AGENTS.md`, or `skills-lock.json` material under
+   `26455900-CS345/`
 
 Follow the canonical source-authority order in `@AGENTS.md`. When semantics are
 involved, consult the cited formal sources rather than trusting the diff alone.
@@ -50,15 +52,15 @@ involved, consult the cited formal sources rather than trusting the diff alone.
 
 ### 1. Context
 
-Identify the ticket, approved spec, expected behaviour, and branch/diff under
-review.
+Identify the ticket, approved spec, expected behaviour, and project diff under
+review. Run Git only against the actual repository:
 
 ```bash
-git status
-git branch --show-current
-git log --oneline -5
-git diff
-git diff --cached
+git -C 26455900-CS345 status
+git -C 26455900-CS345 branch --show-current
+git -C 26455900-CS345 log --oneline -5
+git -C 26455900-CS345 diff
+git -C 26455900-CS345 diff --cached
 ```
 
 ### 2. Tests first
@@ -78,7 +80,7 @@ For each important changed file, apply the eight dimensions above.
 
 | Label | Meaning |
 |---|---|
-| **Blocking** | Must fix before merge |
+| **Blocking** | Must fix before the change is accepted or pushed |
 | **Risk** | Correctness/reproducibility concern needing explicit decision |
 | **Improvement** | Optional improvement |
 | **Nit** | Style preference; may ignore |
@@ -92,14 +94,14 @@ Call out explicitly:
 * correlated oracle/test logic;
 * undocumented assumptions;
 * paper/spec mismatches that tests might miss;
-* submission-boundary leaks.
+* private-workspace boundary leaks.
 
 ### 5. Verification story
 
 Record which checks were actually run vs not run. Prefer project commands:
 
 ```bash
-cd project
+cd 26455900-CS345
 make check
 ```
 

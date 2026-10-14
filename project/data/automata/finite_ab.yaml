@@ -1,0 +1,11 @@
+# Finite string DFA for L = {ab}.
+states: [0, 1, 2]
+initial: 0
+accepting: [2]
+transitions:
+  - from: 0
+    symbol: a
+    to: 1
+  - from: 1
+    symbol: b
+    to: 2

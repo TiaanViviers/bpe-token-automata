@@ -1,0 +1,4 @@
+set,n_strings,n_exact_sequence_match,match_rate,comparators
+example2_ab_le8,511,511,1.0,transducer_vs_reference
+unary_a_le8,9,9,1.0,transducer_vs_reference
+example2_ab_le6_minbpe,127,127,1.0,transducer_vs_minbpe

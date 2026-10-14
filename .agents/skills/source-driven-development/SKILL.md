@@ -106,7 +106,7 @@ report:
 
 When the decision is about a dependency API rather than a paper:
 
-* detect versions from the project dependency files under `project/`;
+* detect versions from dependency files under `26455900-CS345/`;
 * fetch the official docs for that version;
 * cite deep links;
 * flag unverified patterns explicitly.
@@ -119,4 +119,4 @@ In conversation and in tickets/handoffs/notes:
 * label interpretations;
 * list unresolved questions.
 
-Do not place private research notes under `project/`.
+Do not place private research notes under `26455900-CS345/`.

@@ -1,6 +1,6 @@
-# TICKET-000: Example — agent infrastructure navigation
+# TICKET-000: Example — workspace navigation
 
-> **EXAMPLE ONLY.** This ticket documents the shape of a filled ticket. It is not active work. Do not implement from it. Copy [`../templates/ticket.md`](../templates/ticket.md) for real tickets.
+> **EXAMPLE ONLY.** This demonstrates a filled ticket. It is not active work. Copy [`../templates/ticket.md`](../templates/ticket.md) for real tickets.
 
 ## Status
 
@@ -12,147 +12,94 @@ done
 
 - Human owner: (example)
 - Supporting partner: (example)
-- Agent use: documentation / navigation setup
+- Agent use: documentation and navigation
 
 ## Goal
 
-Provide a concrete example of a completed ticket so humans and agents can match the expected structure for future work.
+Document the boundary between the private AI workspace and the assessable project so future agents use the correct sources, working directory, and Git repository.
 
 ## Background
 
-The private agent workspace needs discoverable rules, workflows, and a pointer to the official CS345 project specification. This example records that kind of bounded documentation task.
+The workspace provides private rules and research next to a standalone university GitLab checkout. Agents need both contexts without copying the private material into the project.
 
 ## Authoritative sources
 
-List the exact sources that govern this task.
-
-- Project specification: [`../specs/cs345-project-specification.md`](../specs/cs345-project-specification.md) → `research/markdown/cs345-project-specification.md` (PDF verify-only)
-- Paper and section: N/A for this example
-- Approved decision: keep Markdown as the default agent reading format
-- Existing implementation/documentation: [`../../AGENTS.md`](../../AGENTS.md), [`../README.md`](../README.md)
+- Project specification: [`../specs/cs345-project-specification.md`](../specs/cs345-project-specification.md)
+- Paper and section: N/A
+- Approved decision: `26455900-CS345/` is the only Git repository and `main` is the working branch
+- Existing documentation: [`../../AGENTS.md`](../../AGENTS.md), [`../README.md`](../README.md)
 
 ## Scope
 
-The ticket includes:
-
-- pointer document under `agent/specs/`
-- navigation cheat sheets
-- Cursor rule glob updates for ordinary implementation paths
+- document the workspace/repository boundary;
+- make the specification and workflow easy to find;
+- show project commands running from `26455900-CS345/`.
 
 ## Non-goals
 
-The ticket explicitly excludes:
-
-- implementing tokenizer or automata algorithms
-- converting research papers
-- creating production skills
+- implement tokenizer or automata algorithms;
+- copy private agent or research material into the project;
+- create branches, publication commits, or synchronisation tooling.
 
 ## Preconditions
 
-Before implementation:
-
-- [x] Relevant formal definitions are understood.
-- [x] Major ambiguity has been resolved or recorded.
-- [x] Required interfaces or dependencies exist.
-- [x] The branch and repository state are suitable.
+- [x] Required paths are known.
+- [x] The repository state was inspected.
+- [x] No project implementation change is required.
 
 ## Proposed design
 
-- Keep a single pointer file for the course specification.
-- Agents read Markdown by default; open the PDF only for fidelity checks.
-- Cursor adapters remain thin and link to canonical `agent/` docs.
+Keep private navigation at the workspace root, point agents to authoritative sources, and use explicit `git -C 26455900-CS345` or `cd 26455900-CS345` commands.
 
 ## Files likely to change
 
 ```text
 AGENTS.md
 agent/README.md
-agent/specs/cs345-project-specification.md
-.cursor/rules/*.mdc
-research/README.md
+agent/rules/...
+agent/workflows/...
 ```
-
-This list is guidance, not permission for unrelated changes.
 
 ## Acceptance criteria
 
-- [x] Spec pointer exists and paths resolve.
-- [x] `AGENTS.md` and `agent/README.md` include short navigation cheat sheets.
-- [x] Feature and testing Cursor rules attach under normal `project/src` work paths.
-- [x] Example ticket and handoff exist for format reference.
+- [x] The only repository is named explicitly.
+- [x] Private paths are named explicitly.
+- [x] Direct `main` commands are shown.
+- [x] No export/publication workflow is required.
 
 ## Required test evidence
 
-### Unit tests
-
-- N/A (documentation / process)
-
-### Regression tests
-
-- N/A
-
-### Differential or exhaustive tests
-
-- N/A
-
-### Property or equivalence tests
-
-- N/A
-
-### Negative and special cases
-
-- N/A
+Documentation-only: path checks and a repository status check are sufficient for this example.
 
 ## Documentation changes
 
-- [x] Public API or README
-- [ ] Architecture or algorithm documentation
-- [ ] Decision record
-- [ ] Testing documentation
-- [ ] Experiment documentation
-- [ ] Known limitations
-
-State specific expected updates:
-
-- Update agent navigation docs and research README with spec paths.
+- [x] Agent navigation
+- [x] Git workflow
+- [x] Repository boundary
 
 ## Validation commands
 
 ```bash
-# Path and link sanity (illustrative for this example)
-test -f research/markdown/cs345-project-specification.md
+test -d 26455900-CS345/.git
+git -C 26455900-CS345 status --short --branch
 test -f agent/specs/cs345-project-specification.md
-```
-
-Additional commands:
-
-```bash
-# No project/ code changes in this example.
 ```
 
 ## Risks
 
-- Formal interpretation: N/A
-- Correctness: N/A
-- Performance: N/A
-- Compatibility: Cursor glob behaviour may still miss some tasks; description matching remains a backup
-- Scope: avoid turning examples into living task trackers
-- Reproducibility: PDF remains local/gitignored
+- Scope: accidentally editing project implementation during a workflow-only task
+- Compatibility: agents running Git from the workspace root
+- Reproducibility: claiming private files are part of the project checkout
 
 ## Open questions
 
-- None for this example.
-
-Do not begin implementation while a blocking question remains unresolved.
+None for this example.
 
 ## Definition of done
 
-- [x] Approved scope implemented.
-- [x] Acceptance criteria satisfied.
-- [x] Required tests added and passing.
-- [x] Relevant documentation updated.
-- [ ] `make check` passes.
-- [x] No private material entered `project/`.
-- [x] Handoff produced.
+- [x] Approved scope represented.
+- [x] Paths and workflow are unambiguous.
+- [x] Private material remains outside the project.
+- [x] Example handoff exists.
 - [ ] Human review completed.
-- [x] Both partners can explain the implementation.
+

@@ -3,7 +3,8 @@
 ## Task
 
 - Ticket:
-- Branch:
+- Repository: `26455900-CS345/`
+- Branch: `main` unless explicitly approved otherwise
 - Agent or contributor:
 - Date:
 - Scope:
@@ -14,22 +15,22 @@
 complete | partially complete | blocked | ready for review
 ```
 
-Explain the current state in a few sentences.
+Explain the current state in a few sentences. Do not include planned work as though it were completed.
 
 ## Summary of work
 
 Describe what was actually changed.
 
-Do not include planned work as though it were completed.
-
 ## Files changed
 
+Use paths relative to the workspace root:
+
 ```text
-path/to/file
-path/to/another-file
+26455900-CS345/path/to/file
+agent/path/to/private-file
 ```
 
-For each important file, briefly state its role.
+For each important file, briefly state its role and make the private/project boundary clear.
 
 ## Sources consulted
 
@@ -42,45 +43,34 @@ State whether converted Markdown and/or original PDFs were checked.
 
 ## Decisions made
 
-Record decisions that affect:
-
-- semantics;
-- interfaces;
-- representations;
-- error handling;
-- tests;
-- performance;
-- documentation.
-
-Distinguish temporary implementation choices from approved architectural decisions.
+Record decisions affecting semantics, interfaces, representations, error handling, tests, performance, or documentation. Distinguish temporary implementation choices from approved architecture.
 
 ## Assumptions and invariants
 
-- 
-- 
+-
 
 ## Tests added or changed
 
 ### Added
 
-- 
+-
 
 ### Modified
 
-- 
+-
 
 ### Important cases covered
 
-- 
+-
 
 ## Commands run
 
 ```bash
-cd project
+cd 26455900-CS345
 make check
 ```
 
-Add all meaningful validation commands actually executed.
+List only meaningful commands actually executed.
 
 ## Validation results
 
@@ -91,36 +81,26 @@ Add all meaningful validation commands actually executed.
 | Type checking | |
 | Unit tests | |
 | Full `make check` | |
-| Submission export | |
 | Additional verification | |
+| Private-boundary review | |
 
-Do not report a check as passing unless it was run successfully.
+Use `passed`, `failed`, `timed out`, `not run`, or `not applicable`. Do not report success for an unrun check.
 
 ## Known limitations
 
-- 
+-
 
 ## Unresolved questions
 
-- 
+-
 
-Mark whether each question is blocking or non-blocking.
+Mark each question as blocking or non-blocking.
 
 ## Risks for reviewer
 
-Call attention to areas needing careful review:
-
-- formal interpretation;
-- edge cases;
-- test independence;
-- performance;
-- documentation;
-- compatibility;
-- submission boundary.
+Call attention to formal interpretation, edge cases, test independence, performance, documentation, compatibility, and accidental private-file inclusion.
 
 ## Pre-existing changes preserved
-
-List unrelated modifications that existed before the task and were not changed.
 
 ```text
 None
@@ -132,10 +112,11 @@ State one concrete next action.
 
 ## Git status
 
-Paste or summarise the final status.
+Summarise the final state of the actual repository:
 
-```text
-# git status output
+```bash
+git -C 26455900-CS345 status --short --branch
 ```
 
-No commit or push should be performed unless explicitly authorised.
+State whether commits or pushes were requested and performed. Never imply that private workspace files are tracked by this repository.
+

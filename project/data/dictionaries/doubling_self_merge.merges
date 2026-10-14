@@ -1,0 +1,6 @@
+# Doubling self-merge chain (spec §6.6 nested merges).
+# D = [a⫽a, aa⫽aa, aaaa⫽aaaa, aaaaaaaa⫽aaaaaaaa] over Σ = {a}.
+a a
+aa aa
+aaaa aaaa
+aaaaaaaa aaaaaaaa

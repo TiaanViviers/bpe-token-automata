@@ -64,7 +64,7 @@ research/
 
 The machine-readable catalogue is [`../../research/index.yaml`](../../research/index.yaml).  
 Human-oriented map and verification workflow: [`../../research/README.md`](../../research/README.md).  
-Lightweight path/status checks: `python3 scripts/verify_research_index.py` from the repository root.
+No automated research-index verifier is currently present. Check catalogue schema, path existence, controlled vocabulary, and Markdown image references manually when editing the index; do not cite the retired publication scripts as validation.
 
 ### Project specification
 
@@ -134,7 +134,7 @@ papers:
 
 Do not invent missing metadata. Mark it as unknown until verified.
 
-When conversion fidelity work changes, update both the notes file and `conversion.status` / `conversion.known_issues` in the catalogue, then run `python3 scripts/verify_research_index.py`.
+When conversion fidelity work changes, update both the notes file and `conversion.status` / `conversion.known_issues` in the catalogue, then verify the edited entries and referenced paths. If a dedicated research-index verifier is added later, document its exact workspace-root command here.
 
 ## Conversion status
 

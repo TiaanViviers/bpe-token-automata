@@ -1,0 +1,10 @@
+# Proper reordering of paper [6] Example 1.
+# The paper's dictionary is [a⫽b, a⫽bc, b⫽c, ab⫽c], which is improper:
+# token bc is used before any rule produces it.
+# This file uses [a⫽b, b⫽c, a⫽bc, ab⫽c] so the dictionary is proper.
+# For w = abcbcab the SentencePiece derivation and final tokenization
+# match Example 1, because a⫽bc never applies.
+a b
+b c
+a bc
+ab c

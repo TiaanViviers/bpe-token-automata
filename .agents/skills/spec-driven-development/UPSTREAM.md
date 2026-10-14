@@ -6,4 +6,5 @@
 - Imported date: 2026-07-26
 - Imported commit or version: upstream `main` tip at review `7829ffd90d973b6325f5f12f1b1226dcace74443` (2026-07-26); installer content hash in `skills-lock.json`: `2dee9aa940633b7b5e0f45be34839ab31c0de98d482e16772c5cd350f4b91b4b`
 - Local modifications: Retargeted to `agent/specs/`; distinguish university requirements from local design; stop after specification; remove automatic plan/tasks/implement pipeline and web-app-centric template defaults.
+- Workspace migration (2026-09-07): Clarified that `agent/specs/` is private local material and retargeted validation/promotion paths to `26455900-CS345/`.
 - Licence: MIT License (Copyright (c) 2025 Addy Osmani), confirmed via upstream `LICENSE` on GitHub.

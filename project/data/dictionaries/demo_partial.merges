@@ -1,0 +1,4 @@
+# Byte-disjoint partial order for section 8.6: a⫽b and c⫽d.
+# text: abcd
+a b
+c d

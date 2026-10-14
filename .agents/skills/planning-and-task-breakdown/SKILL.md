@@ -12,7 +12,7 @@ description: >
 # Planning and Task Breakdown
 
 Decompose approved work into bounded, dependency-aware tickets. Planning is
-read-only with respect to `project/` source: the outputs are tickets (and
+read-only with respect to `26455900-CS345/` source: the outputs are tickets (and
 optionally a short plan note), not implementation.
 
 ## When to use
@@ -61,7 +61,7 @@ agent/tickets/TICKET-004-dictionary-parser.md
 
 Do **not** assume GitHub Issues or another external issue tracker.
 
-Do **not** write plans or tickets under `project/`.
+Do **not** write plans or tickets under `26455900-CS345/`.
 
 Optional broader sequencing notes may go under `agent/plans/` if useful. Prefer
 tickets as the actionable artefacts.
@@ -96,7 +96,7 @@ Each ticket should include, via the template:
 * independent test evidence requirements
   (`@agent/rules/testing-and-correctness.md`);
 * documentation changes;
-* validation commands (ordinarily `cd project && make check`);
+* validation commands (ordinarily `cd 26455900-CS345 && make check`);
 * risks;
 * blocking open questions;
 * definition of done.

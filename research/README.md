@@ -2,7 +2,7 @@
 
 Locally managed research-paper sources, Marker Markdown conversions, notes, and a machine-readable catalogue.
 
-This directory is **not** part of the university GitLab export (`project/` subtree only).
+This directory is private local infrastructure and is **not** part of the university GitLab repository at `../26455900-CS345/`.
 
 ```text
 research/
@@ -83,7 +83,7 @@ You do not need to verify every word of every paper. Verify the portions that af
 3. Compare those sections with the PDF; record page/section references in the notes file.
 4. Append durable defects to `conversion.known_issues`.
 5. Update `conversion.status` to `partially-verified`, `verified-for-use`, or keep/set `conversion-defective`.
-6. Run `python3 scripts/verify_research_index.py`.
+6. Verify the edited catalogue fields, controlled vocabulary, referenced paths, and Markdown image links. No automated research-index verifier currently exists.
 
 The verifier is intentionally lightweight: it checks catalogue structure, uniqueness, allowed statuses/roles, path existence, and Markdown image references. It does **not** prove that a conversion is semantically faithful.
 

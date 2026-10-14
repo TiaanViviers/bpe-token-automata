@@ -1,0 +1,5 @@
+# Original example: U+1F600 GRINNING FACE as four UTF-8 bytes F0 9F 98 80.
+# Each rule merges length-1 (or already produced) byte tokens; the emoji is not atomic.
+\xf0 \x9f
+\xf0\x9f \x98
+\xf0\x9f\x98 \x80

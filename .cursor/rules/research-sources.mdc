@@ -2,8 +2,8 @@
 description: Research-paper reading, Markdown conversions, citations, formal definitions, equations, algorithms, or literature-derived implementation decisions
 globs:
   - "research/**"
-  - "project/docs/**/*.md"
-  - "project/report/**"
+  - "26455900-CS345/docs/**/*.md"
+  - "26455900-CS345/report/**"
   - "agent/specs/**"
   - "agent/reviews/**"
 alwaysApply: false

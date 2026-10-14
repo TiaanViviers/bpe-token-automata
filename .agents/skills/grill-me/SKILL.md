@@ -7,7 +7,6 @@ description: >
   Trigger phrases include "grill me", "stress-test this", and "interview me
   about this plan". Do not use to implement code, write tickets, or modify
   files. Prefers the grilling skill for the interview procedure.
-disable-model-invocation: true
 ---
 
 # Grill Me

@@ -1,142 +1,98 @@
-# CI and Quality Gates
+# Quality Gates
 
-Private engineering specification for Phase 1 GitHub Actions quality gates.
+Private engineering specification for project validation.
 
-Workflow source: [`.github/workflows/checks.yml`](../../.github/workflows/checks.yml).
+## Current status
 
-The GitHub main branch is protected by a ruleset requiring pull requests and the three CI quality gates.
-
-This document does not replace repository settings. Configuring the `main`
-ruleset / required status checks is a separate human operations step.
+No CI configuration is currently tracked in `26455900-CS345/`. The present quality contract is local and is run from the assessable repository itself. GitLab CI may be added later if explicitly approved; it must operate directly on this repository and must not recreate export or publication jobs.
 
 ## Purpose
 
-GitHub Actions on this repository exists to:
+Quality gates provide repeatable evidence that:
 
-* protect `main` from unreviewed or broken integration;
-* detect cheap regressions before merge;
-* validate reproducibility from the locked `project/` environment;
-* validate that the standalone `project/` subtree export installs and checks
-  independently.
+- formatting is stable;
+- static analysis passes;
+- type checking passes;
+- tests pass;
+- the locked development environment remains usable;
+- changes satisfy any additional ticket-specific correctness requirements.
 
-It does **not** prove that a marker’s machine is identical to CI. The ordinary
-checks workflow does not publish to GitLab; controlled publication is isolated
-in the manual [`Publish project to GitLab`](../../.github/workflows/publish-gitlab.yml)
-workflow and documented in the
-[`GitLab publication workflow`](../workflows/gitlab-publication.md).
+Passing checks does not replace formal-source fidelity, independent testing, or human review.
 
-## Current required PR jobs
+## Standard commands
 
-Exact job identifiers (stable names for the future `main` ruleset):
-
-```text
-branch-name
-quality
-submission-export
-```
-
-Do not rename these casually. Do not reuse these IDs in another workflow.
-
-## Trigger behaviour
-
-The `Checks` workflow runs on:
-
-* pull requests targeting `main`;
-* pushes to `main`;
-* manual `workflow_dispatch` runs.
-
-It does **not** use `pull_request_target`.
-
-Concurrency cancels outdated runs for the same workflow and ref.
-
-## What each job proves
-
-### `branch-name`
-
-Enforces the collaborative branch-naming convention on pull-request source
-branches:
-
-```text
-^(feature|fix|test|docs|experiment|research|ci|chore)/[a-z0-9]+(-[a-z0-9]+)*$
-```
-
-(Bash ERE form of the project convention; equivalent to the PCRE non-capturing
-variant with `(?:…)`.)
-
-On pushes to `main` (and other non-PR events), the job passes without applying
-the feature-branch regex.
-
-### `quality`
-
-Checks out the monorepo, installs Python 3.12 via `uv` from `project/uv.lock`
-(`uv sync --frozen`), and runs:
+From the workspace root:
 
 ```bash
+cd 26455900-CS345
+make install
 make check
 ```
 
-That currently covers format verification, Ruff lint, mypy, and pytest from
-`project/`.
-
-### `submission-export`
-
-Validates the **exact checked-out commit** as a standalone exported project:
-
-1. full-history checkout (`fetch-depth: 0` for `git subtree split`);
-2. build local `submission` via `./scripts/build_submission.sh`;
-3. verify via `./scripts/verify_submission.sh`;
-4. extract with `git archive` into a clean temporary directory;
-5. run `uv sync --frozen` and `make check` from that export root;
-6. upload `bpe-token-automata-submission.tar.gz` as artifact
-   `validated-submission` (short retention; not a release).
-
-Dirty-tree handling: the subtree is built **before** dependency install in this
-job so the default clean-tree safety of the export script remains intact.
-
-Pull-request checkout: Actions tests GitHub’s merge commit of the PR into
-`main`. The export job uses that same commit — it does not fetch or export an
-unrelated `main` tip.
-
-## What does not run in ordinary PR CI
-
-Ordinary PR / `main` CI stays lightweight. It does **not** run:
-
-* full-scale experiments;
-* one-minute or ten-minute timeout studies;
-* large dictionary builds;
-* expensive exhaustive verification campaigns;
-* final benchmark campaigns;
-* GitLab publication.
-
-## Future tiers
-
-Mentioned for planning only — **not** implemented in Phase 1:
+`make check` is the minimum expected validation before handoff for ordinary source changes. It currently runs:
 
 ```text
-manual full-verification workflow
-GitLab clean-environment CI
-long experiment runners
+format-check → lint → typecheck → test
 ```
 
-## Manual GitLab publication
+The corresponding focused commands are:
 
-GitLab publication is deliberately not a required PR check and never runs on a
-push or pull request. The separate manual workflow accepts only GitHub `main`,
-repeats the export verification and standalone project checks, and pushes only
-the generated publication commit over HTTPS using a dedicated personal access
-token with only `write_repository` scope. The
-publication commit has exactly the verified subtree tree, retains subtree
-history as a parent, and descends from the fetched GitLab tip so the update is
-a normal fast-forward to protected `main`.
+```bash
+make format-check
+make lint
+make typecheck
+make test
+```
 
-The publication job is not evidence that ordinary CI passed for a different
-commit: it validates the exact `main` commit selected for the manual run.
+`make format` modifies files and should be used deliberately.
+
+## Environment and reproducibility
+
+The project targets Python 3.12+ and uses `uv.lock`. Use the locked environment rather than silently changing dependency versions.
+
+A clean-environment check should use:
+
+```bash
+uv sync --frozen
+make check
+```
+
+If the current `make install` target uses non-frozen `uv sync`, do not claim that running it alone proves lockfile reproducibility.
+
+## Change-specific evidence
+
+The standard gate is necessary but may be insufficient. Tickets may also require:
+
+- focused regression tests;
+- bounded exhaustive checks with declared bounds;
+- differential or property tests with recorded seeds;
+- automata equivalence checks;
+- deterministic serialization checks;
+- benchmark smoke tests;
+- documented timeout or memory limits.
+
+Use [`../rules/testing-and-correctness.md`](../rules/testing-and-correctness.md) to select independent evidence.
+
+## Handoff reporting
+
+Record exact commands and outcomes. Distinguish:
+
+- passed;
+- failed;
+- timed out;
+- not run;
+- not applicable.
+
+Do not report `make check` as passed when only focused tests ran. Do not omit failures.
+
+## Future CI
+
+If GitLab CI is introduced, its ordinary pipeline should run on commits to this repository and reproduce the local quality gate from the repository root. It should not require branch-name checks, pull-request jobs, subtree splitting, submission archives, publication commits, special remotes, or repository synchronisation unless the human explicitly changes the workflow.
 
 ## Limitations
 
-* GitHub Actions does not prove a human marker’s machine matches CI.
-* Passing CI does not replace partner review or formal source fidelity.
-* The uploaded submission artifact is a CI convenience only; it is not an
-  official release and must not be pushed to GitLab outside the controlled
-  publication process.
-* Action major-version upgrades and ruleset wiring remain follow-up work.
+- Local success does not prove a marker's environment is identical.
+- Tooling checks do not prove formal correctness.
+- Expensive experiments and exhaustive campaigns remain separate unless a ticket requires them.
+- Repository settings and server-side CI state are not documented here unless verified.
+

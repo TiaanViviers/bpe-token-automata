@@ -1,214 +1,135 @@
-# Feature Development Workflow
+# Development Workflow
 
 ## Purpose
 
-This workflow applies to medium or large implementation changes.
+This workflow applies to medium or large implementation changes. Small documentation or configuration fixes may use a lighter version while keeping scope and validation clear.
 
-Small documentation fixes and trivial configuration corrections may use a lighter process, provided scope and validation remain clear.
+All project work occurs directly in `26455900-CS345/` on `main`. The workspace root supplies private context only.
 
 ## 1. Confirm readiness
 
-Before implementation, identify:
+Identify:
 
-- the requested outcome;
-- the approved ticket;
-- relevant formal definitions;
+- the requested outcome and approved scope;
+- the relevant ticket, if one exists;
+- formal definitions and source sections;
 - unresolved design decisions;
 - expected test evidence;
-- files likely to change.
+- likely files.
 
-Do not begin theory-sensitive implementation from a vague idea alone.
+Theory-sensitive work is ready only when its scope, non-goals, sources, testable acceptance criteria, and blocking ambiguities are clear.
 
-A feature is ready when:
+## 2. Inspect context and repository state
 
-- scope is bounded;
-- non-goals are stated;
-- required sources are identified;
-- acceptance criteria are testable;
-- major ambiguities have been resolved or explicitly deferred.
+From the workspace root, read `AGENTS.md`, applicable rules, the ticket, recent handoffs, relevant research, code, and tests.
 
-## 2. Inspect repository state
-
-Run:
+Inspect the real repository explicitly:
 
 ```bash
-git status
-git branch --show-current
-git log --oneline -5
+git -C 26455900-CS345 status
+git -C 26455900-CS345 branch --show-current
+git -C 26455900-CS345 log --oneline -5
 ```
 
-Read:
+The branch should be `main`. Report overlapping pre-existing changes before editing. Do not create or switch branches unless explicitly asked.
 
-- root `AGENTS.md`;
-- the approved ticket;
-- recent relevant handoffs;
-- applicable rules;
-- relevant code and tests;
-- relevant human-approved decisions.
+## 3. Plan the change
 
-Report pre-existing changes before editing.
-
-## 3. Prepare the branch
-
-A human approves branch creation or switching, or `git-ops` applies
-(`.agents/skills/git-ops/SKILL.md`).
-
-Suggested pattern:
-
-```bash
-git switch main
-git pull --ff-only origin main
-git switch -c feature/<short-description>
-```
-
-Use another approved prefix where appropriate.
-
-Do not combine unrelated tickets on one branch.
-
-## 4. Produce an implementation plan
-
-The plan should cover:
+For non-trivial work, cover:
 
 - current understanding;
-- files or modules involved;
+- modules involved;
 - data structures and invariants;
 - algorithmic steps;
 - error behaviour;
-- test strategy;
+- independent test strategy;
 - documentation changes;
-- risks;
-- explicit non-goals.
+- risks and non-goals.
 
-For formal algorithms, identify the paper section or specification clause being implemented.
+For formal algorithms, identify the governing paper section or specification clause. Surface unresolved ambiguity before encoding an assumption.
 
-Obtain human approval before making substantial implementation changes.
+## 4. Implement narrowly
 
-## 5. Implement in narrow increments
-
-Prefer a sequence such as:
+Make project changes only under `26455900-CS345/`. Prefer small, coherent increments such as:
 
 1. domain types or interfaces;
 2. deterministic fixtures;
-3. focused unit tests;
+3. focused tests;
 4. minimal implementation;
 5. special cases;
-6. differential or property tests;
-7. documentation;
-8. cleanup.
+6. differential, property, or equivalence evidence;
+7. technical documentation;
+8. cleanup within scope.
 
-Avoid large speculative rewrites.
+Avoid speculative rewrites. Keep semantic decisions separate from representation optimisation where practical.
 
-Keep semantic decisions separate from representation optimisation where possible.
+## 5. Validate continuously
 
-## 6. Validate continuously
-
-During implementation, run focused checks.
-
-Examples:
+Run focused checks from the project repository:
 
 ```bash
-cd project
+cd 26455900-CS345
 uv run pytest tests/path/to/relevant_test.py
 uv run mypy src tests
 uv run ruff check .
 ```
 
-Before handoff:
+Before handoff for ordinary source changes:
 
 ```bash
 make check
 ```
 
-For changes affecting exportability, also run from the repository root:
+A ticket may require additional exhaustive, equivalence, or benchmark commands. Report timeouts, unsupported cases, and failures honestly.
 
-```bash
-./scripts/build_submission.sh
-./scripts/verify_submission.sh
-```
+No subtree build, submission export, or cross-repository publication verification is required.
 
-A feature-specific ticket may require additional exhaustive, equivalence, or benchmark commands.
+## 6. Review the project diff
 
-## 7. Review the diff
-
-Inspect:
+From `26455900-CS345/`, inspect:
 
 ```bash
 git status
 git diff
 ```
 
-Check for:
+Check for accidental scope expansion, unrelated formatting, private workspace files, generated artefacts, missing tests or documentation, nondeterministic output, silent fallback behaviour, and correlated implementation/oracle logic.
 
-- accidental scope expansion;
-- unrelated formatting;
-- private files under `project/`;
-- generated artefacts that should not be committed;
-- missing tests;
-- missing documentation;
-- nondeterministic output;
-- silent fallback behaviour;
-- duplicated implementation and oracle logic.
+## 7. Produce a handoff
 
-Do not stage or commit unless explicitly authorised, or `git-ops` applies.
+Use [`../templates/handoff.md`](../templates/handoff.md) when a durable handoff is appropriate. Record scope, files, sources, decisions, tests, commands, actual outcomes, questions, risks, pre-existing changes, and the repository's final Git status.
 
-## 8. Produce a handoff
+Do not call work complete when required evidence or review remains outstanding.
 
-Use the handoff template.
+## 8. Human review
 
-The handoff should include:
+The reviewer should compare the diff with the request or ticket, verify formal-source agreement, challenge assumptions, inspect test independence, review validation, and confirm that the change is explainable.
 
-- task and scope;
-- status;
-- files changed;
-- sources consulted;
-- decisions made;
-- tests added;
-- commands run;
-- outcomes;
-- open questions;
-- known risks;
-- recommended next step.
+Material changes after review require renewed review.
 
-Do not describe work as complete when review or required evidence remains outstanding.
+## 9. Commit and push when requested
 
-## 9. Human review
+Staging, committing, and pushing are not automatic consequences of implementation. When the human requests them, use coherent commits directly on `main`:
 
-The human reviewer should:
+```bash
+cd 26455900-CS345
+git status
+git add <files>
+git commit -m "<message>"
+git push origin main
+```
 
-- compare the diff with the ticket;
-- verify formal-source agreement;
-- challenge assumptions;
-- inspect test independence;
-- run or inspect validation;
-- confirm documentation;
-- confirm both partners can explain the change.
+Stage only intended project files. Do not create a branch, pull request, merge request, submission branch, or publication commit.
 
-Material changes after approval require renewed review.
+## 10. Close the task
 
-## 10. Commit and pull request
+After completion:
 
-After approval, create coherent commits.
+- update the ticket `Status` when applicable;
+- record deliberately deferred work;
+- keep long-lived project documentation consistent;
+- confirm `main` and the working tree are in the reported state;
+- leave private AI support material outside the repository.
 
-Open a pull request using the repository template.
+Passing checks cannot resolve a formal ambiguity by itself.
 
-The pull request should link to:
-
-- the ticket;
-- relevant research note;
-- architecture decision where applicable;
-- handoff;
-- tests and results.
-
-CI must pass before merge (`branch-name`, `quality`, `submission-export`; see [`../specs/ci-and-quality-gates.md`](../specs/ci-and-quality-gates.md)).
-
-## 11. Merge and close
-
-After merge:
-
-- delete the feature branch when safe;
-- set the ticket `Status` field to `done` (tickets stay in the flat `agent/tickets/` directory);
-- record any deferred follow-up work;
-- ensure long-lived documentation reflects the merged behaviour;
-- verify `main` remains healthy.
-
-Do not merge unresolved formal ambiguity merely because CI passes.

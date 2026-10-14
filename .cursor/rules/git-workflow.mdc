@@ -1,9 +1,7 @@
 ---
-description: Use for Git branches, commits, pull requests, merges, repository history, submission exports, or GitLab publication
+description: Use for Git status, commits, pushes, repository history, remotes, or exceptional branch operations in the standalone university repository
 globs:
-  - "**/.github/**"
-  - "scripts/build_submission.sh"
-  - "scripts/verify_submission.sh"
+  - "26455900-CS345/.gitlab-ci.yml"
   - "agent/rules/git-and-branches.md"
   - "agent/workflows/feature-development.md"
 alwaysApply: false
@@ -13,18 +11,18 @@ Before any Git-related task, read and follow:
 
 @agent/rules/git-and-branches.md
 
-For Git write work (branch, commit, push, PR, rebase, amend, merge), follow:
-
-@.agents/skills/git-ops/SKILL.md
-
 Also consult these when relevant:
 
 @agent/workflows/feature-development.md
 @agent/templates/handoff.md
 @agent/specs/ci-and-quality-gates.md
 
-Invoking `git-ops`, or asking for Git write work in chat, is explicit
-authorisation for repository-legal operations under
-@agent/rules/git-and-branches.md. Do not re-ask for conversational sign-off
-on each command. Hard stops (GitLab publish, force-push to `main`, secrets,
-settings) still need clearer separate human direction.
+`26455900-CS345/` is the only Git repository. Run Git from that directory or
+with `git -C 26455900-CS345`. The default branch is `main`, the remote is
+`origin`, and the ordinary authorised write path is add, commit, then
+`git push origin main`.
+
+Do not run Git at the workspace root. Do not create feature, submission, or
+publication branches, pull requests, merge requests, export commits, or
+synchronisation workflows unless explicitly asked. Git writes still require a
+human request under @agent/rules/git-and-branches.md.

@@ -1,0 +1,10 @@
+# Proper dictionary with a useless final rule (paper remark after Definition 5)
+rules:
+  - left: b
+    right: c
+  - left: a
+    right: b
+  - left: c
+    right: d
+  - left: ab
+    right: cd

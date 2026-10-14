@@ -1,9 +1,9 @@
 ---
 description: Automated tests, correctness evidence, test fixtures, fuzzing, exhaustive enumeration, differential testing, or automata equivalence
 globs:
-  - "project/tests/**"
-  - "project/src/**"
-  - "project/src/**/verification/**"
+  - "26455900-CS345/tests/**"
+  - "26455900-CS345/src/**"
+  - "26455900-CS345/src/**/verification/**"
 alwaysApply: false
 ---
 

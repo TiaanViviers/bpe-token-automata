@@ -1,0 +1,6 @@
+# Quick live-demo input. Same rules as example2.merges (paper Example 2).
+# text: aba
+# pattern: a
+# dictionary-b: demo_other.merges
+a a
+b a
